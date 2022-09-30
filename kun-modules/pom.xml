@@ -13,6 +13,10 @@
     <description>业务模块</description>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>kun-module-blog</module>
+    </modules>
+
     <dependencies>
 
     </dependencies>
