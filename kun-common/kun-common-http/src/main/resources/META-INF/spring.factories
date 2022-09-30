@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.kun.common.http.config.OkHttpConfiguration,\
+  com.kun.common.http.util.OkHttpUtil
+
+  

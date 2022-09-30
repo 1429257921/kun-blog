@@ -1,0 +1,38 @@
+spring:
+  cloud:
+    function:
+      # 函数名称，对应服务中的注入的Bean
+      definition: source;sink;
+    stream:
+#      defaultBinder: defaultRabbit #默认绑定器
+#        default: #默认配置，所有通道可以使用此配置
+#          content-type: application/json #消息的格式,此处其沿用了springmvc里的messageConverter，跟接口的ContentType配置类似
+#          binder: defaultRabbit #使用默认的绑定器
+      bindings:
+        # 自定义消息通道的名称
+        source-out-0:
+          # exchange名称,交换模式默认是topic，创建时同时会创建QUEUE_DOME.${spring.application.name}队列
+          destination: QUEUE_DOME
+          # 设置消息的类型为json
+          content-type: application/json
+          # 分组
+          group: ${spring.application.name}
+          # 绑定的binder名称
+          binder: default-binder
+        sink-in-0:
+          destination: QUEUE_DOME
+          content-type: application/json
+          group: ${spring.application.name}
+          binder: default-binder
+      rabbit:
+        bindings:
+          source-out-0:
+            producer:
+              # 延时队列的延时时间，单位毫秒
+              ttl: 5000
+              # 为true是开启死信队列
+              auto-bind-dlq: true
+              # 死信队列的交换机
+              dead-letter-exchange: QUEUE_DOME_IN
+              # 死信队列名称
+              dead-letter-queueName: QUEUE_DOME_IN.${spring.application.name}

@@ -13,8 +13,17 @@
     <description>公共模块</description>
     <packaging>pom</packaging>
 
-    <dependencies>
+    <modules>
+        <module>kun-common-core</module>
+        <module>kun-common-web</module>
+        <module>kun-common-file</module>
+        <module>kun-common-http</module>
+        <module>kun-common-log</module>
+        <module>kun-common-redis</module>
+        <module>kun-common-rabbitmq</module>
+    </modules>
 
+    <dependencies>
     </dependencies>
 
 </project>
