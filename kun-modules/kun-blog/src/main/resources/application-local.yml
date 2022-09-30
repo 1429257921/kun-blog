@@ -1,18 +1,16 @@
 spring:
   redis:
-    host: 地址
+    host: 127.0.0.1
     port: 6379
-    password: 密码
+    password:
   # 数据源配置
   datasource:
     druid:
-      url: jdbc:mysql://地址/kun-blog?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
-      username: 用户
-      password: 密码
-      #password: Pd7cXC57eVNNFFrAtmEih3wK0Af1xo7PbfpoRrV7lE39tDIxV/yaMGAn9sGoyvOalsS3pV7/n1c7WAgo3kkEbg==
+      url: jdbc:mysql://127.0.0.1:3306/kun-blog?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
+      username: root
+      password: root
       driver-class-name: com.mysql.cj.jdbc.Driver
       type: com.alibaba.druid.pool.DruidDataSource
-      connection-properties: config.decrypt=true;config.decrypt.key=${publicKey}
       # 初始化大小，最小，最大
       initialSize: 3
       minIdle: 3
@@ -27,16 +25,11 @@ spring:
       test-on-borrow: true
       test-on-return: true
       validationQuery: SELECT 1 FROM DUAL
-
-      # filter:
-      #   config:
-      #     enabled: true
       # 配置监控统计拦截的filters
       filters: stat
       stat-view-servlet:
         url-pattern: /druid/*
         reset-enable: false
-
       web-stat-filter:
         url-pattern: /*
         exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
