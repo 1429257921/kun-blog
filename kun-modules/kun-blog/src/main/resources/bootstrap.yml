@@ -6,7 +6,7 @@ spring:
   application:
     name: @artifactId@
   profiles:
-    active: local
+    active: prod
 
 # 打印执行的sql语句
 logging:

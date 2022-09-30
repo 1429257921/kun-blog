@@ -1,14 +1,14 @@
 spring:
   redis:
-    host: 112.74.169.107
+    host: 地址
     port: 6379
-    password: admin123
+    password: 密码
   # 数据源配置
   datasource:
     druid:
-      url: jdbc:mysql://112.74.169.107:3306/kun-blog?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
-      username: root
-      password: qazWSX123
+      url: jdbc:mysql://地址/kun-blog?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
+      username: 用户
+      password: 密码
       #password: Pd7cXC57eVNNFFrAtmEih3wK0Af1xo7PbfpoRrV7lE39tDIxV/yaMGAn9sGoyvOalsS3pV7/n1c7WAgo3kkEbg==
       driver-class-name: com.mysql.cj.jdbc.Driver
       type: com.alibaba.druid.pool.DruidDataSource
