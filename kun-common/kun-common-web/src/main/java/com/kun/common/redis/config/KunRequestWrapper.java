@@ -18,9 +18,9 @@ import java.util.*;
  * 所以需要定义一个HttpServletRequest实现类：MyRequestWrapper，
  * 这个实现类可以被赋值来满足我们的需求。
  *
- * @author: gzc
- * @createTime: 2022-1-10 10:39
- **/
+ * @author gzc
+ * @since 2022/9/30 20:44
+ */
 @Slf4j
 public class KunRequestWrapper extends HttpServletRequestWrapper {
 

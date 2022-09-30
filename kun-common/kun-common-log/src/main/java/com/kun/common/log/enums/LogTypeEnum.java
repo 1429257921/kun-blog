@@ -5,9 +5,9 @@ import cn.hutool.core.util.StrUtil;
 /**
  * 日志类型枚举
  *
- * @author: gzc
- * @createTime: 2021-12-9 11:13
- **/
+ * @author gzc
+ * @since 2022/9/30 20:39
+ */
 public enum LogTypeEnum {
     /**
      * 日志类型

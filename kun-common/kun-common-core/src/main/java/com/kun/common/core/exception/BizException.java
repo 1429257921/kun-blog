@@ -3,10 +3,11 @@ package com.kun.common.core.exception;
 import com.kun.common.core.enums.ErrorEnum;
 
 /**
- * @author: gzc
- * @createTime: 2021-11-13 14:12
- * @description: 自定义运行时异常
- **/
+ * 自定义运行时异常
+ *
+ * @author gzc
+ * @since 2022/9/30 20:30
+ */
 public class BizException extends RuntimeException {
     /**
      * 错误码

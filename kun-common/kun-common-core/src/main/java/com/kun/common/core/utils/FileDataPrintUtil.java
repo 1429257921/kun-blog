@@ -11,11 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import java.lang.reflect.Field;
 
 /**
- * 过滤对象中的文件数据，转化成json字符串
+ * 过滤对象中的文件数据，转化成json字符串 工具类
  *
  * @author gzc
- * @since 2022-6-15 10:15
- **/
+ * @since 2022/9/30 20:32
+ */
 @Slf4j
 public class FileDataPrintUtil {
 

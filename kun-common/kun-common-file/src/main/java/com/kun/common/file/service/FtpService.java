@@ -13,11 +13,11 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 
 /**
- * hutool FTP工具类
+ * hutool FTP服务类
  *
  * @author gzc
- * @since 2022-6-22 13:52
- **/
+ * @since 2022/9/30 20:36
+ */
 @RequiredArgsConstructor
 @Slf4j
 public class FtpService {

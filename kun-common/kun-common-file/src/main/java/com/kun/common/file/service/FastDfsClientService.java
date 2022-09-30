@@ -14,7 +14,10 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
+ * FastDFS客户端服务类
+ *
  * @author gzc
+ * @since 2022/9/30 20:36
  */
 @RequiredArgsConstructor
 public class FastDfsClientService {
@@ -52,7 +55,7 @@ public class FastDfsClientService {
      *
      * @param remoteFilePath fastDfs上文件存储的路径
      */
-	public void delFile(String remoteFilePath) {
+    public void delFile(String remoteFilePath) {
         storageClient.deleteFile(remoteFilePath);
     }
 

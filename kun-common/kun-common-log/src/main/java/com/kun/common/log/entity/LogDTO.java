@@ -7,10 +7,9 @@ import java.io.Serializable;
 /**
  * 通用日志dto对象
  *
- * @author: gzc
- * @createTime: 2022-1-10 14:54
- * @since: 1.0
- **/
+ * @author gzc
+ * @since 2022/9/30 20:39
+ */
 @Data
 public class LogDTO implements Serializable {
 

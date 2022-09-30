@@ -9,8 +9,8 @@ import com.kun.common.redis.entity.vo.KunResult;
  * 响应VO工具类
  *
  * @author gzc
- * @since 2022/9/22 22:10
- **/
+ * @since 2022/9/30 20:45
+ */
 public class KunResultUtil {
 
     public static KunResult ok() {

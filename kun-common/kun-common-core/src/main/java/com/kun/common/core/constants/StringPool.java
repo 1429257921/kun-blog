@@ -1,9 +1,10 @@
-package com.kun.common.core.utils;
+package com.kun.common.core.constants;
 
 /**
  * 字符串常量池
+ *
  * @author gzc
- * @since
+ * @since 2022/9/30 20:32
  */
 public interface StringPool {
 

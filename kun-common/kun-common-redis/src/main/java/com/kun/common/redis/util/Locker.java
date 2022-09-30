@@ -3,11 +3,11 @@ package com.kun.common.redis.util;
 import java.util.concurrent.TimeUnit;
 
 /**
- * TODO
+ * Locker统一接口
  *
  * @author gzc
- * @since 2022/9/21 5:27
- **/
+ * @since 2022/9/30 20:43
+ */
 public interface Locker {
     /**
      * 获取锁，如果锁不可用，则当前线程处于休眠状态，直到获得锁为止。

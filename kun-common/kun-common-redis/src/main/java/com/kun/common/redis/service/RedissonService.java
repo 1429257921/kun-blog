@@ -6,11 +6,11 @@ import lombok.RequiredArgsConstructor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * TODO
+ * Redisson 服务类
  *
  * @author gzc
- * @since 2022/9/21 5:29
- **/
+ * @since 2022/9/30 20:42
+ */
 @RequiredArgsConstructor
 public class RedissonService {
     public final Locker locker;

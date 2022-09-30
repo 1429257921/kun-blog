@@ -9,10 +9,10 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * 接口响应vo对象
+ * 接口统一响应vo对象
  *
  * @author gzc
- * @since 2022/9/22
+ * @since 2022/9/30 20:44
  */
 @Accessors(chain = true)
 @NoArgsConstructor

@@ -7,13 +7,13 @@ import com.kun.common.core.exception.BizException;
  * 文件服务器类型枚举
  *
  * @author gzc
- * @since 2022-6-17 9:38
- **/
+ * @since 2022/9/30 20:35
+ */
 public enum FileSystemEnum {
     /**
      * ftp
      */
-	FTP("1"),
+    FTP("1"),
     /**
      * fastDFS
      */

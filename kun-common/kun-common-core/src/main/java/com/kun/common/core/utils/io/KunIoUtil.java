@@ -9,12 +9,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * io操作工具类
+ * 公共io操作工具类
  *
- * @author: gzc
- * @createTime: 2022-1-28 15:58
- * @since: 1.0
- **/
+ * @author gzc
+ * @since 2022/9/30 20:31
+ */
 public class KunIoUtil {
 
     /**

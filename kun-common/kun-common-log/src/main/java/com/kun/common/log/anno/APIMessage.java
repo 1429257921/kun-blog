@@ -8,27 +8,26 @@ import java.lang.annotation.Target;
 /**
  * 接口描述相关注解
  *
- * @author: gzc
- * @createTime: 2022-1-10 10:11
- * @since: 1.0
- **/
+ * @author gzc
+ * @since 2022/9/30 20:38
+ */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface APIMessage {
 
-	/**
-	 * 当前接口中文描述
-	 */
-	String value();
+    /**
+     * 当前接口中文描述
+     */
+    String value();
 
-	/**
-	 * 是否打印当前接口入参数据（打印入参并校验是否为空，为空则抛出异常）
-	 */
-	boolean printReqParam() default true;
+    /**
+     * 是否打印当前接口入参数据（打印入参并校验是否为空，为空则抛出异常）
+     */
+    boolean printReqParam() default true;
 
-	/**
-	 * 当前接口是否请求响应结果日志入库
-	 */
-	boolean reqLogInsertDB() default true;
+    /**
+     * 当前接口是否请求响应结果日志入库
+     */
+    boolean reqLogInsertDB() default true;
 
 }

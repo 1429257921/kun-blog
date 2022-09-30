@@ -1,11 +1,11 @@
 package com.kun.common.core.constants;
 
 /**
- * 本地线程变量map key
+ * 本地线程变量集合key常量值
  *
  * @author gzc
- * @since 2022/9/22 22:33
- **/
+ * @since 2022/9/30 20:28
+ */
 public class ThreadLocalMapConstants {
 
     /**

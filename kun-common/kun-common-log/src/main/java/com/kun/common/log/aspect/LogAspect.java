@@ -7,16 +7,16 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kun.common.core.constants.ComRegexConstant;
 import com.kun.common.core.constants.ThreadLocalMapConstants;
 import com.kun.common.core.exception.Assert;
 import com.kun.common.core.utils.ThreadLocalUtil;
-import com.kun.common.log.entity.LogDTO;
-import com.kun.common.log.service.ComLogService;
-import com.kun.common.redis.util.WebContextUtil;
 import com.kun.common.log.anno.APIMessage;
+import com.kun.common.log.entity.LogDTO;
 import com.kun.common.log.enums.LogTypeEnum;
-import com.kun.common.core.constants.ComRegexConstant;
+import com.kun.common.log.service.ComLogService;
 import com.kun.common.log.service.ParamPrintFilerService;
+import com.kun.common.redis.util.WebContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -31,10 +31,9 @@ import java.util.regex.Pattern;
 /**
  * 请求响应日志切面
  *
- * @author: gzc
- * @createTime: 2022-1-10 14:48
- * @since: 1.0
- **/
+ * @author gzc
+ * @since 2022/9/30 20:38
+ */
 @Slf4j
 @Aspect
 public class LogAspect {
@@ -50,9 +49,9 @@ public class LogAspect {
      * 环绕通知(切入点为注解)
      *
      * @param joinPoint
-     * @return: java.lang.Object
-     * @author: gzc
-     * @date: 2022-1-10 14:51
+     * @return java.lang.Object
+     * @author gzc
+     * @since 2022/9/30 20:38
      */
     @Around("@annotation(com.kun.common.log.anno.APIMessage)")
     public Object aroundApiLogInsertDB(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -134,7 +133,6 @@ public class LogAspect {
      * @param joinPoint 连接点对象
      * @return: void
      * @author: gzc
-     * @date: 2022-1-10 15:31
      */
     private void reqLogPrint(ProceedingJoinPoint joinPoint) {
         APIMessage apiMessage = getAPIMessage(joinPoint);
@@ -210,7 +208,6 @@ public class LogAspect {
      * @param endTime   结束时间
      * @return: com.jiahe.ylq.common.entity.dto.LogDTO
      * @author: gzc
-     * @date: 2022-1-10 15:26
      */
     private LogDTO getLogInfo(ProceedingJoinPoint joinPoint, Object result,
                               Exception exception, Integer logType,

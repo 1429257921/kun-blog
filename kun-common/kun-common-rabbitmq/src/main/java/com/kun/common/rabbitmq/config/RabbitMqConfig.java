@@ -14,8 +14,8 @@ import java.lang.reflect.Field;
  * rabbitMQ客户端配置
  *
  * @author gzc
- * @since 2022/9/22 4:25
- **/
+ * @since 2022/9/30 20:26
+ */
 @RequiredArgsConstructor
 @Configuration
 public class RabbitMqConfig {

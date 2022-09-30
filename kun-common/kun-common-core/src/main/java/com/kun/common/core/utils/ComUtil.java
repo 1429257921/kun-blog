@@ -6,11 +6,11 @@ import cn.hutool.core.lang.UUID;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 通用工具类
+ * 公共工具类
  *
- * @author: gzc
- * @createTime: 2021-11-17 18:04
- **/
+ * @author gzc
+ * @since 2022/9/30 20:32
+ */
 @Slf4j
 public class ComUtil {
 

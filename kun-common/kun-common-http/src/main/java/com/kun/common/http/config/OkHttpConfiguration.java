@@ -22,10 +22,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * OkHttp配置类
  *
- * @author: gzc
- * @createTime: 2022-3-11 4:55
- * @since: 1.0
- **/
+ * @author gzc
+ * @since 2022/9/30 20:37
+ */
 @Slf4j
 @RequiredArgsConstructor
 public class OkHttpConfiguration {

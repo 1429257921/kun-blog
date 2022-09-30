@@ -1,11 +1,11 @@
 package com.kun.common.rabbitmq.service;
 
 /**
- * 生产者接口
+ * 生产者统一接口
  *
  * @author gzc
- * @since 2022/9/22 2:54
- **/
+ * @since 2022/9/30 20:40
+ */
 public interface ProducerService {
 
     /**
