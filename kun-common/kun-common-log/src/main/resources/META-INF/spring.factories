@@ -1,4 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.kun.common.log.aspect.LogAspect
+  com.kun.blog.common.log.aspect.LogAspect
 
   

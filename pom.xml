@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <groupId>com.kun</groupId>
+    <artifactId>kun-cloud</artifactId>
+    <version>4.0</version>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.kun</groupId>
-    <artifactId>kun-blog</artifactId>
-    <version>4.0</version>
-
-    <description>kun-blog</description>
+    <description>kun-cloud</description>
     <packaging>pom</packaging>
 
     <modules>

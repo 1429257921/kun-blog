@@ -1,6 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.github.tobato.fastdfs.FdfsClientConfig,\
-  com.kun.common.file.service.FileSystemService,\
-  com.kun.common.file.service.FastDfsClientService
+  com.kun.blog.common.file.service.FileSystemService,\
+  com.kun.blog.common.file.service.FastDfsClientService
 
   
