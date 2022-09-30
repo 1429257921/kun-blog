@@ -17,3 +17,40 @@
 ### 3、持久层
 
 - Apache Mybatis-plus 3.5.1
+
+## 🎨 系统演示
+### 👉 演示地址：http://www.baidu.com
+
+## 🍪 技术架构
+
+
+## ❓ 部分截图
+
+
+## 🔧 功能特点
+* 坤坤表情包搜索
+* 坤坤聊天室
+* 坤坤论坛
+* 坤坤小游戏
+* 坤坤周报商城
+* 坤坤音乐播放器
+* 坤坤精彩小视频点播
+
+## 🗿 文件结构
+```lua
+kun-cloud -- 父项目,各模块分离，方便集成和微服务
+│  ├─kun-common -- 核心通用模块，主模块
+│  │  ├─kun-common-core -- 封装通用模块
+│  │  ├─kun-common-database -- 封装Mybatis及数据库基础模块
+│  │  ├─kun-common-file -- 封装文件服务器模块
+│  │  ├─kun-common-http -- 封装http模块
+│  │  ├─kun-common-log -- 封装日志模块
+│  │  ├─kun-common-rabbitmq -- 封装rabbitmq消息队列模块
+│  │  ├─kun-common-redis -- 封装redis缓存模块
+│  │  ├─kun-common-web -- 封装web模块
+│  │─mate-gateway -- 统一网关模块 [10001]
+│  │─kun-modules -- 平台模块项目，目前包含系统子模块
+│  │  ├─kun-blog -- 坤坤博客模块 [9200]
+```
+## ✨ 特别鸣谢
+特别感谢ikun对`KunCloud`项目提供的技术支持！
