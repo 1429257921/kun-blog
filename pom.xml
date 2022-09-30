@@ -12,6 +12,7 @@
     <modules>
         <module>kun-common</module>
         <module>kun-modules</module>
+        <module>kun-gateway</module>
     </modules>
 
     <properties>
