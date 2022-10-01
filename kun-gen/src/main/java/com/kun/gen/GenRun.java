@@ -73,7 +73,7 @@ public class GenRun {
                 .Builder()
                 .outputDir(projectPath + "/" + moduleName + "/src/main/java")
                 .author(author)
-                .openDir("true".equals(openDir))
+//                .openDir("true".equals(openDir))
                 .commentDate("yyyy-MM-dd HH:mm:ss")
                 .build();
 
@@ -99,7 +99,8 @@ public class GenRun {
         TemplateConfig templateConfig = new TemplateConfig
                 .Builder()
                 .mapper(mapperTempPath)
-                .service(serviceTempPath, serviceImplTempPath)
+                .service(serviceTempPath)
+                .serviceImpl(serviceImplTempPath)
                 .entity(entityTempPath)
                 .mapperXml(null)
                 .controller(null)

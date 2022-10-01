@@ -89,6 +89,12 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <!-- 代码生成 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${spring-boot.mybatis-plus.version}</version>
+            </dependency>
             <!-- druid数据库连接池 -->
             <dependency>
                 <groupId>com.alibaba</groupId>
