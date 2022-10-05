@@ -10,9 +10,9 @@
     <artifactId>kun-blog</artifactId>
     <description>坤坤博客系统</description>
 
-<!--    <properties>-->
-<!--        <artifactId>${project.artifactId}</artifactId>-->
-<!--    </properties>-->
+    <!--    <properties>-->
+    <!--        <artifactId>${project.artifactId}</artifactId>-->
+    <!--    </properties>-->
 
     <dependencies>
         <dependency>
@@ -51,6 +51,13 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
+        <!-- 添加资源 在yml中用@@可以读取pom.xml文件中的配置信息 -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -63,14 +70,25 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- docker -->
+<!--            <plugin>-->
+<!--                <groupId>com.spotify</groupId>-->
+<!--                <artifactId>docker-maven-plugin</artifactId>-->
+<!--                <version>0.4.13</version>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; made of '[a-z0-9-_.]' &ndash;&gt;-->
+<!--                    <imageName>${project.artifactId}:${project.version}</imageName>-->
+<!--                    <dockerDirectory>${project.basedir}</dockerDirectory>-->
+<!--                    <resources>-->
+<!--                        <resource>-->
+<!--                            <targetPath>/</targetPath>-->
+<!--                            <directory>${project.build.directory}</directory>-->
+<!--                            <include>${project.build.finalName}.jar</include>-->
+<!--                        </resource>-->
+<!--                    </resources>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
-        <!-- 添加资源 在yml中用@@可以读取pom.xml文件中的配置信息 -->
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
     </build>
 
 </project>

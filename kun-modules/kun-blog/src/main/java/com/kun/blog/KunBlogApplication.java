@@ -21,6 +21,7 @@ import org.springframework.util.StringUtils;
 public class KunBlogApplication {
 
     public static void main(String[] args) {
+        // 设置参数 java.awt.headless=false, 也可以添加启动参数 -Djava.awt.headless=false来代替
         SpringApplicationBuilder builder = new SpringApplicationBuilder(KunBlogApplication.class);
         ConfigurableApplicationContext run = builder.headless(false).run(args);
 //        printConfigInfo(SpringApplication.run(KunBlogApplication.class, args));
