@@ -25,7 +25,7 @@ public class FastDfsClientService {
     private final FastFileStorageClient storageClient;
 
 
-    @Value("${fdfs.groupName:#{null}")
+    @Value("${fdfs.groupName}")
     private String groupName;
 
     /**

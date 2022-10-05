@@ -30,6 +30,16 @@
             <artifactId>kun-common-log</artifactId>
             <version>4.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.kun</groupId>
+            <artifactId>kun-common-file</artifactId>
+            <version>4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kun</groupId>
+            <artifactId>kun-common-http</artifactId>
+            <version>4.0</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -33,3 +33,27 @@ spring:
       web-stat-filter:
         url-pattern: /*
         exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+
+# fastdfs连接配置
+fdfs:
+  groupName: kunkun
+  soTimeout: 3000
+  connectTimeout: 600
+  # 缩略图生成参数
+  thumbImage:
+    width: 150
+    height: 150
+  # TrackerList参数,支持多个
+  trackerList:
+    - 168.168.28.10:9080
+  fileServerUrl: http://168.168.28.10:8080/
+
+# okhttp相关配置
+ok:
+  http:
+    # 连接超时时间(秒)
+    connect-timeout: 120
+    # 读取超时时间(秒)
+    read-timeout: 300
+    # 写入超时时间(秒)
+    write-timeout: 300
