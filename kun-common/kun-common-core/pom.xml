@@ -42,6 +42,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-commons -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+        </dependency>
 
 
     </dependencies>

@@ -8,10 +8,10 @@ package com.kun.common.core.enums;
  */
 public enum ErrorEnum {
     // 成功段
-    SUCCESS("0", "成功"),
-    FAIL("-1", "失败"),
-    ERROR("99", null),
-    IMPOSE_ERROR("400", "操作频繁"),
+    SUCCESS("200", "成功"),
+    FAIL("400", "失败"),
+    ERROR("400", "失败"),
+    IMPOSE_ERROR("19", "操作频繁"),
 
     // 登录段
     LOGIN_PASSWORD_ERROR("1", "账户密码不匹配"),

@@ -1,4 +1,4 @@
-package com.kun.common.redis.util;
+package com.kun.common.web.util;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
@@ -9,7 +9,7 @@ import com.alibaba.fastjson.JSONValidator;
 import com.kun.common.core.constants.ThreadLocalMapConstants;
 import com.kun.common.core.exception.BizException;
 import com.kun.common.core.utils.ThreadLocalUtil;
-import com.kun.common.redis.config.KunRequestWrapper;
+import com.kun.common.web.config.KunRequestWrapper;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.Charset;

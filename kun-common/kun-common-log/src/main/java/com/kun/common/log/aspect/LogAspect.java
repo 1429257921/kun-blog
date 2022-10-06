@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kun.common.core.constants.ComRegexConstant;
 import com.kun.common.core.constants.ThreadLocalMapConstants;
 import com.kun.common.core.exception.Assert;
-import com.kun.common.redis.util.WebContextUtil;
+import com.kun.common.web.util.WebContextUtil;
 import com.kun.common.core.utils.ThreadLocalUtil;
 import com.kun.common.log.anno.APIMessage;
 import com.kun.common.log.entity.LogDTO;

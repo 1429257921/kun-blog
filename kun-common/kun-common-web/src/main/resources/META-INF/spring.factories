@@ -1,5 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.kun.common.redis.config.KunHandlerFilter,\
-  com.kun.common.redis.handler.GlobalExceptionHandler
+  com.kun.common.web.config.KunHandlerFilter,\
+  com.kun.common.web.handler.GlobalExceptionHandler,\
+  com.kun.common.web.handler.GlobalResponseBodyAdvice
 
   

@@ -1,4 +1,4 @@
-package com.kun.common.redis.util;
+package com.kun.common.web.util;
 
 import com.kun.common.core.exception.Assert;
 import lombok.extern.slf4j.Slf4j;

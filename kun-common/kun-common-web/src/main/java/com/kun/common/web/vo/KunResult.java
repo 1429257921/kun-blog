@@ -1,6 +1,6 @@
-package com.kun.common.redis.vo;
+package com.kun.common.web.vo;
 
-import com.kun.common.redis.util.KunResultUtil;
+import com.kun.common.web.util.KunResultUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

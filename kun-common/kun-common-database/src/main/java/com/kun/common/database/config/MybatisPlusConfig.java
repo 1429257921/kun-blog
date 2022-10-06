@@ -1,11 +1,14 @@
 package com.kun.common.database.config;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.github.pagehelper.PageHelper;
 import com.kun.common.database.interceptor.SqlLogInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+
+import java.util.Properties;
 
 /**
  * MybatisPlus配置
@@ -34,4 +37,20 @@ public class MybatisPlusConfig {
         return new SqlLogInterceptor();
     }
 
+    /**
+     * 配置mybatis的分页插件pageHelper
+     * @return
+     */
+    @Bean
+    public PageHelper pageHelper() {
+        PageHelper pageHelper = new PageHelper();
+        Properties properties = new Properties();
+        properties.setProperty("offsetAsPageNum", "true");
+        properties.setProperty("rowBoundsWithCount", "true");
+        properties.setProperty("reasonable", "true");
+        //配置mysql数据库的方言
+        properties.setProperty("dialect", "mysql");
+        pageHelper.setProperties(properties);
+        return pageHelper;
+    }
 }

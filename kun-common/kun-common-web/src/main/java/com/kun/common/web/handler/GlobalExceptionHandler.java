@@ -1,13 +1,13 @@
-package com.kun.common.redis.handler;
+package com.kun.common.web.handler;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.CharUtil;
 import com.alibaba.fastjson.JSONException;
-import com.kun.common.redis.util.WebContextUtil;
+import com.kun.common.web.util.WebContextUtil;
 import com.kun.common.core.enums.ErrorEnum;
 import com.kun.common.core.exception.BizException;
 import com.kun.common.core.utils.ThreadLocalUtil;
-import com.kun.common.redis.vo.KunResult;
+import com.kun.common.web.vo.KunResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -27,7 +27,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 /**
- * 全局统一异常处理类
+ * 全局异常处理
  *
  * @author gzc
  * @since 2022/9/30 20:44

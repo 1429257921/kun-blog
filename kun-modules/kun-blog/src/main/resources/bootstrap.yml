@@ -5,6 +5,8 @@ server:
 spring:
   application:
     name: @artifactId@
+  main:
+    allow-circular-references: true
   profiles:
     active: prod
 

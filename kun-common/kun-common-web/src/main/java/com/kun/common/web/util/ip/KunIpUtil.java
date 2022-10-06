@@ -1,4 +1,4 @@
-package com.kun.common.redis.util.ip;
+package com.kun.common.web.util.ip;
 
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;

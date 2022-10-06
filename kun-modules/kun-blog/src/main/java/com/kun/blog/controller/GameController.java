@@ -1,7 +1,7 @@
 package com.kun.blog.controller;
 
 import com.kun.blog.entity.game.Yang;
-import com.kun.common.redis.vo.KunResult;
+import com.kun.common.web.vo.KunResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

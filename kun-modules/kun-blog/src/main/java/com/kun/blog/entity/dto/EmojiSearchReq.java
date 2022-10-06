@@ -1,5 +1,6 @@
 package com.kun.blog.entity.dto;
 
+import com.kun.common.database.anno.Query;
 import lombok.Data;
 
 /**
@@ -11,15 +12,8 @@ import lombok.Data;
 @Data
 public class EmojiSearchReq {
     /**
-     * 当前页数
-     */
-    private Integer currPage;
-    /**
-     * 页大小
-     */
-    private Integer pageSize;
-    /**
      * 搜索内容
      */
+    @Query(type = Query.Type.EQUAL, propName = "name")
     private String searchContent;
 }

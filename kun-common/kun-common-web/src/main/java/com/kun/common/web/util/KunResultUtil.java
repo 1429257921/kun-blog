@@ -1,9 +1,9 @@
-package com.kun.common.redis.util;
+package com.kun.common.web.util;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import com.kun.common.core.enums.ErrorEnum;
 import com.kun.common.core.exception.BizException;
-import com.kun.common.redis.vo.KunResult;
+import com.kun.common.web.vo.KunResult;
 
 /**
  * 响应VO工具类

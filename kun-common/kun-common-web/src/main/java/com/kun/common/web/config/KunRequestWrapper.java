@@ -1,4 +1,4 @@
-package com.kun.common.redis.config;
+package com.kun.common.web.config;
 
 import lombok.extern.slf4j.Slf4j;
 
