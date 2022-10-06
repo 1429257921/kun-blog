@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-<#assign a = 0>
 <#list table.fields as field>
 	<#if field.propertyType = "Date">
 import java.util.Date;
@@ -49,7 +48,10 @@ public class ${entity} {
         <#else>
 	@TableField(fill = FieldFill.${field.fill})
         </#if>
-    <#elseif field.convert>
+<#--    <#elseif field.convert>-->
+<#--	@TableField("${field.annotationColumnName}")-->
+<#--    </#if>-->
+	<#elseif field.annotationColumnName != field.propertyName>
 	@TableField("${field.annotationColumnName}")
     </#if>
 <#-- 乐观锁注解 -->

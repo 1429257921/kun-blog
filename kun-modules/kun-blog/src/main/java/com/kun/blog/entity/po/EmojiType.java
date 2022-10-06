@@ -9,14 +9,14 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 坤坤表情包
+ * 表情包类型
  *
  * @author gzc
  * @since 2022-10-06 21:17:25
  */
 @Data
-@TableName("emoji")
-public class Emoji {
+@TableName("emoji_type")
+public class EmojiType {
 
 	/**
 	 * 主键id
@@ -24,18 +24,14 @@ public class Emoji {
 	@TableId(value = "id", type = IdType.AUTO)
 	private Integer id;
 	/**
-	 * 表情包类型ID(emoji_type表主键id)
+	 * 类型名称
 	 */
-	@TableField("type_id")
-	private Integer typeId;
+	@TableField("type_name")
+	private String typeName;
 	/**
-	 * 表情包远程网址
+	 * 备注
 	 */
-	private String url;
-	/**
-	 * 表情包保存地址
-	 */
-	private String path;
+	private String remark;
 	/**
 	 * 创建时间
 	 */
@@ -46,16 +42,4 @@ public class Emoji {
 	 */
 	@TableField("update_time")
 	private Date updateTime;
-	/**
-	 * 表情包名称
-	 */
-	private String name;
-	/**
-	 * 备注
-	 */
-	private String remark;
-	/**
-	 * 热度值
-	 */
-	private Integer heat;
 }
