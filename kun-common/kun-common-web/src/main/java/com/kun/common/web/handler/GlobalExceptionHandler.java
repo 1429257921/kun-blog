@@ -11,7 +11,10 @@ import com.kun.common.web.vo.KunResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -55,21 +58,6 @@ public class GlobalExceptionHandler {
         return returnAfter(req, kunResult);
     }
 
-//    /**
-//     * 处理Dubbo RPC调用异常
-//     */
-//    @ExceptionHandler(value = RpcException.class)
-//    public Object rpcExceptionHandler(HttpServletRequest req, RpcException e) {
-//        String url = req.getServletPath();
-//        log.error("{}发生服务异常, 接口路径{}, 异常原因:{}",
-//                WebContextUtil.getApiMsg(), url, e);
-//        log.info("{}发生服务异常, 接口路径{}, 异常原因简单描述为:{}\n",
-//                WebContextUtil.getApiMsg(), url, e.getMessage());
-//
-//        BaseResult baseResult = BaseResult.errDetailMsg(ErrorEnum.SERVICE_REMOTE_FAIL, e);
-//        return returnAfter(req, baseResult);
-//    }
-
     /**
      * 处理请求方法类型不支持异常
      */
@@ -81,6 +69,31 @@ public class GlobalExceptionHandler {
                 WebContextUtil.getApiMsg(), url, e);
         KunResult kunResult = KunResult.errDetailMsg(ErrorEnum.REQUEST_METHOD_NOT_SUPPORT, e);
         return returnAfter(req, kunResult);
+    }
+    /**
+     * 检验参数
+     *
+     * @param req
+     * @param e
+     * @return
+     */
+    @ExceptionHandler({BindException.class})
+    public Object handleBindException(HttpServletRequest req, BindException e) {
+        String url = req.getServletPath();
+        String errMsg = "未获取到参数校验不通过原因！！！";
+        BindingResult bindingResult = e.getBindingResult();
+        if (bindingResult != null) {
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            if (CollUtil.isNotEmpty(allErrors)) {
+                errMsg = allErrors.get(0).getDefaultMessage();
+            }
+        }
+        log.error("{}参数校验不通过, 接口路径{}, 校验不通过原因:{}",
+                WebContextUtil.getApiMsg(), url, errMsg);
+        log.info("{}参数校验不通过, 接口路径{}, 校验不通过原因:{}\n",
+                WebContextUtil.getApiMsg(), url, errMsg);
+        KunResult result = KunResult.err(errMsg);
+        return returnAfter(req, result);
     }
 
     /**

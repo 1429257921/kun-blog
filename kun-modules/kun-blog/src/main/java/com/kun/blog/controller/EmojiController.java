@@ -1,6 +1,7 @@
 package com.kun.blog.controller;
 
 import com.kun.blog.entity.dto.EmojiSearchReq;
+import com.kun.blog.entity.po.Emoji;
 import com.kun.blog.service.IEmojiService;
 import com.kun.common.log.anno.APIMessage;
 import com.kun.common.web.vo.KunResult;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +37,7 @@ public class EmojiController {
      */
     @APIMessage("搜索坤坤表情包")
     @GetMapping("search")
-    public ResponseEntity<Object> search(EmojiSearchReq emojiSearchReq, Pageable pageable) {
+    public ResponseEntity<Object> search(@Validated EmojiSearchReq emojiSearchReq, Pageable pageable) {
         return new ResponseEntity<>(iEmojiService.search(emojiSearchReq, pageable), HttpStatus.OK);
     }
 
@@ -48,8 +50,8 @@ public class EmojiController {
      */
     @APIMessage("增加坤坤表情包")
     @PostMapping("add")
-    public KunResult<?> add() {
-        return null;
+    public ResponseEntity<Object> add(Emoji emoji) {
+        return new ResponseEntity<>(iEmojiService.save(emoji), HttpStatus.OK);
     }
 
 }

@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @author ${author}
  * @since ${date}
  */
-@Mapper
 public interface ${table.mapperName} extends CoreMapper<${entity}> {
 
 }
