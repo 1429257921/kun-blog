@@ -7,6 +7,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 <#list table.fields as field>
+    <#if field.propertyType = "BigDecimal">
+import java.math.BigDecimal;
+        <#break>
+    </#if>
 	<#if field.propertyType = "Date">
 import java.util.Date;
         <#break>

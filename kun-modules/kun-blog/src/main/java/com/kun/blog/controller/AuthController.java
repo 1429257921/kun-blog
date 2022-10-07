@@ -1,8 +1,10 @@
 package com.kun.blog.controller;
 
-import com.kun.blog.service.TokenService;
+import com.kun.blog.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,10 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/token/")
-public class TokenController {
+public class AuthController {
 
-    private final TokenService tokenService;
+    private final AuthService authService;
 
+    @GetMapping(value = "/code")
+    public ResponseEntity<Object> getCode() {
+        return new ResponseEntity<>(authService.getCode(), HttpStatus.OK);
+    }
 
 }
 

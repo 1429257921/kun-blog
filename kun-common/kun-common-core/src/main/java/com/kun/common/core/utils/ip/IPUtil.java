@@ -3,6 +3,8 @@ package com.kun.common.core.utils.ip;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import eu.bitwalker.useragentutils.Browser;
+import eu.bitwalker.useragentutils.UserAgent;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
@@ -64,14 +66,14 @@ public class IPUtil {
     }
 
 
-//	/**
-//	 * 获取浏览器
-//	 * @param request
-//	 * @return
-//	 */
-//	public static String getBrowser(HttpServletRequest request) {
-//		UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
-//		Browser browser = userAgent.getBrowser();
-//		return browser.getName();
-//	}
+	/**
+	 * 获取浏览器
+	 * @param request
+	 * @return
+	 */
+	public static String getBrowser(HttpServletRequest request) {
+		UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
+		Browser browser = userAgent.getBrowser();
+		return browser.getName();
+	}
 }

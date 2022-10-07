@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @Component
-public class KunHandlerFilter implements Filter {
+public class GlobalHandlerFilter implements Filter {
 
     /**
      * 将请求放入请求链中
@@ -39,10 +39,8 @@ public class KunHandlerFilter implements Filter {
             if (request instanceof HttpServletRequest) {
                 KunRequestWrapper rw = new KunRequestWrapper(req);
                 if (rw != null) {
-//					if (StrUtil.isNotBlank(rw.getBody()) || CollUtil.isNotEmpty(rw.getHeaderMap())) {
                     chain.doFilter(rw, response);
                     return;
-//					}
                 }
             }
 

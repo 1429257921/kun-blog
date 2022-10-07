@@ -62,7 +62,7 @@ public class EmojiController {
     /**
      * 增加坤坤表情包
      *
-     * @param
+     * @param file
      * @author gzc
      * @since 2022/10/6 13:12
      */
