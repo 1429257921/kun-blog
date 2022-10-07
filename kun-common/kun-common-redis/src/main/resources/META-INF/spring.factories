@@ -1,5 +1,8 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.kun.common.redis.config.RedisConfig,\
-  com.kun.common.redis.service.RedisService
+  com.kun.common.redis.service.RedisService,\
+  com.kun.common.redis.aop.LimitAspect,\
+  com.kun.common.redis.aop.RepeatSubmitAspect,\
+  com.kun.common.redis.util.RedisLockUtil
 
   
