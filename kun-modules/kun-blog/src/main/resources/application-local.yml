@@ -1,4 +1,12 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10
+      max-request-size: 10
+  security:
+    user:
+      name: root
+      password: root
   redis:
     host: ${KUN_BLOG_SERVER_IP}
     port: 6379

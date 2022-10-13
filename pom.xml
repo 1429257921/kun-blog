@@ -37,6 +37,7 @@
         <configuration.version>1.9</configuration.version>
         <okhttp.version>4.9.3</okhttp.version>
         <pagehelper.version>1.2.5</pagehelper.version>
+        <gson.version>2.9.1</gson.version>
 
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <maven-compiler-plugin.version>2.6.7</maven-compiler-plugin.version>
@@ -196,6 +197,14 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <!-- gson -->
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>

@@ -1,4 +1,4 @@
-package com.kun.common.web.util;
+package com.kun.common.core.utils.spring;
 
 import com.kun.common.core.exception.Assert;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
  * @author gzc
  * @since 2022/9/30 20:44
  */
-@Slf4j
 public class ContextUtil {
 
     /**

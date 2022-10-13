@@ -1,6 +1,7 @@
 package com.kun.blog.config;
 
 import com.fasterxml.jackson.databind.util.StdDateFormat;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.text.FieldPosition;

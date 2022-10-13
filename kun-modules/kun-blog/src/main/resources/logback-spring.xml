@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <!-- 日志存放路径 -->
-    <property name="log.path" value="./logs/kun-blog"/>
+    <property name="log.path" value="/logs/kun-blog"/>
     <!-- 日志输出格式 -->
     <property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n"/>
 
@@ -65,12 +65,11 @@
     <logger name="com.lj" level="info"/>
     <!-- Spring日志级别控制  -->
     <logger name="org.springframework" level="WARN"/>
-
     <logger name="com.alibaba.nacos.client.naming" level="WARN" additivity="false"/>
 
-    <root level="info">
-        <appender-ref ref="console"/>
-    </root>
+<!--    <root level="info">-->
+<!--        <appender-ref ref="console"/>-->
+<!--    </root>-->
 
     <springProfile name="prod">
         <!--系统操作日志-->
@@ -91,6 +90,12 @@
         <root level="info">
             <appender-ref ref="file_info"/>
             <appender-ref ref="file_error"/>
+        </root>
+    </springProfile>
+    <springProfile name="local">
+        <!--系统操作日志-->
+        <root level="info">
+            <appender-ref ref="console"/>
         </root>
     </springProfile>
 

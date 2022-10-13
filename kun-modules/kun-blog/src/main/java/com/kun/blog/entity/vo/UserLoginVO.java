@@ -1,5 +1,6 @@
 package com.kun.blog.entity.vo;
 
+import com.kun.blog.security.dto.JwtUser;
 import lombok.Data;
 
 /**
@@ -14,5 +15,9 @@ public class UserLoginVO {
      * 用户token
      */
     private String userToken;
+    /**
+     * 用户信息
+     */
+//    private JwtUser user;
 
 }

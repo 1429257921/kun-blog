@@ -1,6 +1,7 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.kun.common.web.config.GlobalHandlerFilter,\
   com.kun.common.web.handler.GlobalExceptionHandler,\
-  com.kun.common.web.handler.GlobalResponseBodyAdvice
+  com.kun.common.web.handler.GlobalResponseBodyAdvice,\
+  com.kun.common.log.util.InitData
 
   

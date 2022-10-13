@@ -1,4 +1,4 @@
-package com.kun.blog.config;
+package com.kun.blog.handler;
 
 import com.kun.common.web.handler.GlobalExceptionHandler;
 import com.kun.common.web.vo.ApiError;

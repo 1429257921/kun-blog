@@ -1,4 +1,4 @@
-package com.kun.blog.config;
+package com.kun.blog.security;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @Configuration(proxyBeanMethods = false)
 @ConfigurationProperties(prefix = "jwt")
-public class SecurityProperties {
+public class JwtProperties {
 
     /**
      * Request Headers ： Authorization

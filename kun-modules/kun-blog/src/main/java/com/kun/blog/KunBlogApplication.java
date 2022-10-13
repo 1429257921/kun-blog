@@ -4,10 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.util.StringUtils;
-
 
 /**
  * 启动类
@@ -21,11 +19,7 @@ import org.springframework.util.StringUtils;
 public class KunBlogApplication {
 
     public static void main(String[] args) {
-        // 设置参数 java.awt.headless=false, 也可以添加启动参数 -Djava.awt.headless=false来代替
-//        SpringApplicationBuilder builder = new SpringApplicationBuilder(KunBlogApplication.class);
-//        ConfigurableApplicationContext run = builder.headless(false).run(args);
         printConfigInfo(SpringApplication.run(KunBlogApplication.class, args));
-//        printConfigInfo(run);
     }
 
     /**

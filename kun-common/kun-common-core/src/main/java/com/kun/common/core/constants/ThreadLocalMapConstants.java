@@ -11,7 +11,7 @@ public class ThreadLocalMapConstants {
     /**
      * 接口中文描述 KEY
      */
-    public static final String API_MESSAGE = "API_MESSAGE";
+    public static final String API_MESSAGE = "API_MESSAGE_";
     /**
      * 订单ID KEY
      */

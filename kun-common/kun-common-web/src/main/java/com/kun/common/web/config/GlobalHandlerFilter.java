@@ -2,6 +2,8 @@ package com.kun.common.web.config;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author gzc
  * @since 2022/9/30 20:43
  */
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @Slf4j
 @Component
 public class GlobalHandlerFilter implements Filter {
@@ -39,6 +42,7 @@ public class GlobalHandlerFilter implements Filter {
             if (request instanceof HttpServletRequest) {
                 KunRequestWrapper rw = new KunRequestWrapper(req);
                 if (rw != null) {
+                    System.out.println(rw.getBody());
                     chain.doFilter(rw, response);
                     return;
                 }

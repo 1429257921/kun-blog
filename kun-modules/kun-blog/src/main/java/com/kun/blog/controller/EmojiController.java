@@ -1,7 +1,7 @@
 package com.kun.blog.controller;
 
-import com.kun.blog.entity.dto.EmojiGetConfigReq;
-import com.kun.blog.entity.dto.EmojiSearchReq;
+import com.kun.blog.entity.req.EmojiGetConfigReq;
+import com.kun.blog.entity.req.EmojiSearchReq;
 import com.kun.blog.service.IEmojiService;
 import com.kun.common.log.anno.APIMessage;
 import com.kun.common.redis.aop.Limit;

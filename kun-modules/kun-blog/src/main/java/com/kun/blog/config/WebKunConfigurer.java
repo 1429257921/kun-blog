@@ -65,7 +65,11 @@ public class WebKunConfigurer implements WebMvcConfigurer {
                 .allowedHeaders("*");
     }
 
-    //JSON格式 全局日期转换器配置
+    /**
+     * JSON格式 全局日期转换器配置
+     *
+     * @return
+     */
     @Bean
     public MappingJackson2HttpMessageConverter getMappingJackson2HttpMessageConverter() {
         MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
@@ -81,8 +85,12 @@ public class WebKunConfigurer implements WebMvcConfigurer {
         return mappingJackson2HttpMessageConverter;
     }
 
-    //表单格式 全局日期转换器
-
+    /**
+     * 表单格式 全局日期转换器
+     *
+     * @param globalDateConvert
+     * @return
+     */
     @Bean
     @Autowired
     public ConversionService getConversionService(GlobalFormDateConvert globalDateConvert) {

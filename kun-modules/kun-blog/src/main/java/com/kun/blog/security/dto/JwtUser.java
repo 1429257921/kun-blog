@@ -1,4 +1,4 @@
-package com.kun.blog.entity.vo;
+package com.kun.blog.security.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -13,8 +13,10 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 /**
- * @author hupeng
- * @date 2018-11-23
+ * jwt用户详情
+ *
+ * @author gzc
+ * @since 2022/10/12 1:41
  */
 @Getter
 @AllArgsConstructor
@@ -80,7 +82,7 @@ public class JwtUser implements UserDetails {
         return enabled;
     }
 
-    public Collection getRoles() {
-        return authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
-    }
+//    public Collection getRoles() {
+//        return authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
+//    }
 }

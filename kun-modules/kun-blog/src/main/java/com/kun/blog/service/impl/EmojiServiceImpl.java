@@ -1,8 +1,8 @@
 package com.kun.blog.service.impl;
 
 import com.github.pagehelper.PageInfo;
-import com.kun.blog.entity.dto.EmojiGetConfigReq;
-import com.kun.blog.entity.dto.EmojiSearchReq;
+import com.kun.blog.entity.req.EmojiGetConfigReq;
+import com.kun.blog.entity.req.EmojiSearchReq;
 import com.kun.blog.entity.po.Emoji;
 import com.kun.blog.entity.vo.EmojiGetConfigVO;
 import com.kun.blog.entity.vo.EmojiUploadVO;

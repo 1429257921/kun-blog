@@ -1,4 +1,4 @@
-package com.kun.blog.entity.dto;
+package com.kun.blog.entity.req;
 
 import com.kun.common.database.anno.Query;
 import lombok.Data;

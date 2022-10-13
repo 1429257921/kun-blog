@@ -6,9 +6,8 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONValidator;
-import com.kun.common.core.constants.ThreadLocalMapConstants;
 import com.kun.common.core.exception.BizException;
-import com.kun.common.core.utils.ThreadLocalUtil;
+import com.kun.common.core.utils.spring.ContextUtil;
 import com.kun.common.web.config.KunRequestWrapper;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +19,7 @@ import java.util.Map;
  * 获取request和response工具类
  *
  * @author gzc
- * @since 2022/9/30 20:45
+ * @since 2022/10/12 0:55
  */
 @Slf4j
 public class WebContextUtil extends ContextUtil {
@@ -36,49 +35,13 @@ public class WebContextUtil extends ContextUtil {
      * 通过在接口上添加APIMessage注解，获取接口中文描述
      */
     public static String getApiMsg() {
-        String apiMsg = ThreadLocalUtil.get(ThreadLocalMapConstants.API_MESSAGE, "");
-        return StrUtil.isNotBlank(apiMsg) ? apiMsg : "未知接口";
+//        String apiMsg = InitData.getApiMsg(getServletPath());
+//        System.out.println(apiMsg);
+//        return StrUtil.isNotBlank(apiMsg) ? apiMsg : "未知接口";
+        return "";
     }
 
     public static String getToken() {
-//		String header = getRequest().getHeader(CacheConstants.TOKEN);
-//		if (StrUtil.isNotBlank(header)) {
-//			return header;
-//		}
-//		JSONObject urlParamObj = JSON.parseObject(getURLParam());
-//		if (urlParamObj != null) {
-//			String token1 = urlParamObj.getString(CacheConstants.TOKEN);
-//			if (StrUtil.isNotBlank(token1)) {
-//				return token1;
-//			}
-//			String token2 = urlParamObj.getString(CacheConstants.USER_TOKEN1);
-//			if (StrUtil.isNotBlank(token2)) {
-//				return token2;
-//			}
-//			String token3 = urlParamObj.getString(CacheConstants.USER_TOKEN2);
-//			if (StrUtil.isNotBlank(token3)) {
-//				return token3;
-//			}
-//		}
-//		String bodyParam = getBodyParam();
-//		JSONValidator.Type type = JSONValidator.from(bodyParam).getType();
-//		if (JSONValidator.Type.Object.equals(type)) {
-//			JSONObject bodyParamObj = JSON.parseObject(bodyParam);
-//			if (bodyParamObj != null) {
-//				String token1 = bodyParamObj.getString(CacheConstants.TOKEN);
-//				if (StrUtil.isNotBlank(token1)) {
-//					return token1;
-//				}
-//				String token2 = bodyParamObj.getString(CacheConstants.USER_TOKEN1);
-//				if (StrUtil.isNotBlank(token2)) {
-//					return token2;
-//				}
-//				String token3 = bodyParamObj.getString(CacheConstants.USER_TOKEN2);
-//				if (StrUtil.isNotBlank(token3)) {
-//					return token3;
-//				}
-//			}
-//		}
         return "";
     }
 
@@ -90,14 +53,12 @@ public class WebContextUtil extends ContextUtil {
         StringBuilder sb = new StringBuilder();
         String urlParam = getURLParam();
         if (StrUtil.isNotBlank(urlParam)) {
-//			log.info("{}获取URL中的参数", getApiMsg());
             sb.append("请求URL中的参数->");
             sb.append(urlParam);
             sb.append("\n");
         }
         String bodyParam = getBodyParam();
         if (StrUtil.isNotBlank(bodyParam)) {
-//			log.info("{}获取Body中的参数", getApiMsg());
             sb.append("请求body中的参数->");
             sb.append(bodyParam);
         }

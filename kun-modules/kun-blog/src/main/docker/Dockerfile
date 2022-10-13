@@ -12,4 +12,4 @@ ENV KUN_BLOG_FASTDFS_PORT=1
 
 # 运行jar包
 RUN bash -c 'touch /kun-blog.jar'
-ENTRYPOINT ["java","-jar","-Dfile.encoding=utf-8","kun-blog.jar","--spring.profiles.active=prod","-Djava.awt.headless=false"]
+ENTRYPOINT ["java","-jar","-Dfile.encoding=utf-8","kun-blog.jar","--spring.profiles.active=prod","-Djava.awt.headless=false",""]

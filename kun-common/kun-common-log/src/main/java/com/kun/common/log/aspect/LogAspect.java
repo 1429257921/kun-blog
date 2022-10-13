@@ -8,24 +8,21 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kun.common.core.constants.ComRegexConstant;
-import com.kun.common.core.constants.ThreadLocalMapConstants;
 import com.kun.common.core.exception.Assert;
-import com.kun.common.web.util.WebContextUtil;
-import com.kun.common.core.utils.ThreadLocalUtil;
 import com.kun.common.log.anno.APIMessage;
 import com.kun.common.log.entity.LogDTO;
 import com.kun.common.log.enums.LogTypeEnum;
 import com.kun.common.log.service.ComLogService;
 import com.kun.common.log.service.ParamPrintFilerService;
+import com.kun.common.log.util.InitData;
+import com.kun.common.web.util.WebContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
 /**
@@ -34,6 +31,7 @@ import java.util.regex.Pattern;
  * @author gzc
  * @since 2022/9/30 20:38
  */
+//@Order(Ordered.HIGHEST_PRECEDENCE)
 @Slf4j
 @Aspect
 public class LogAspect {
@@ -63,9 +61,9 @@ public class LogAspect {
         DateTime endTime = DateUtil.date();
         String apiMsg = "";
         try {
+            apiMsg = InitData.getApiMsg();
             // 请求参数输出日志
-            reqLogPrint(joinPoint);
-            apiMsg = ThreadLocalUtil.get(ThreadLocalMapConstants.API_MESSAGE);
+            reqLogPrint(apiMsg, joinPoint);
             log.info("开始执行{} 业务逻辑", apiMsg);
             try {
                 response = joinPoint.proceed();
@@ -79,11 +77,10 @@ public class LogAspect {
                 throw exception;
             }
             // 获取返回值
-//			String result = ObjectUtil.isNotEmpty(response) ? String.valueOf(response) : "";
             Object result = response;
 
             // 正常信息日志入库
-            LogDTO logDTO = getLogInfo(joinPoint, result, null,
+            LogDTO logDTO = getLogInfo(apiMsg, joinPoint, result, null,
                     LogTypeEnum.SYSTEM_LOG.getCode(), beginTime, endTime);
 
             insertDB(apiMsg, logDTO, joinPoint);
@@ -94,12 +91,11 @@ public class LogAspect {
                 exception = (Exception) th;
             }
             // 错误信息日志入库
-            LogDTO logDTO = getLogInfo(joinPoint, null, exception,
+            LogDTO logDTO = getLogInfo(apiMsg, joinPoint, null, exception,
                     LogTypeEnum.ERROR_LOG.getCode(), beginTime, endTime);
             insertDB(apiMsg, logDTO, joinPoint);
             throw th;
         } finally {
-            ThreadLocalUtil.remove();
             log.info("结束执行{} 业务逻辑, 耗时->{}", apiMsg, DateUtil.betweenMs(beginTime, endTime));
         }
         return response;
@@ -116,14 +112,13 @@ public class LogAspect {
         APIMessage apiMessage = getAPIMessage(joinPoint);
         try {
             // 判断是否入库
-            if (apiMessage.reqLogInsertDB()) {
+            if (apiMessage != null && apiMessage.reqLogInsertDB()) {
                 if (comLogService != null) {
                     comLogService.insertDB(logDTO);
                 }
             }
         } catch (Exception e) {
             log.error("{}切面日志入库发生异常, 异常原因为{}", apiMsg, e);
-//			throw new BizException(apiMsg + "切面日志入库发生异常", e);
         }
     }
 
@@ -134,17 +129,12 @@ public class LogAspect {
      * @return: void
      * @author: gzc
      */
-    private void reqLogPrint(ProceedingJoinPoint joinPoint) {
+    private void reqLogPrint(String apiMsg, ProceedingJoinPoint joinPoint) {
         APIMessage apiMessage = getAPIMessage(joinPoint);
-        // 接口描述
-        String apiMsg = "[" + apiMessage.value() + "]接口";
-        // 赋值接口描述
-        ThreadLocalUtil.set(ThreadLocalMapConstants.API_MESSAGE, apiMsg);
         log.info("请求地址->{}", WebContextUtil.getServletPath());
-
         // 是否打印请求参数
-        if (apiMessage.printReqParam()) {
-            log.info("请求token->{}", WebContextUtil.getToken());
+        if (apiMessage != null && apiMessage.printReqParam()) {
+//            log.info("请求token->{}", WebContextUtil.getToken());
             String reqParam = reqParamFilerFile(joinPoint);
             log.info("{}请求参数->\n{}", apiMsg, reqParam);
             Assert.notBlank(reqParam, "请求参数为空");
@@ -156,6 +146,7 @@ public class LogAspect {
      *
      * @param joinPoint
      */
+    @SuppressWarnings("all")
     private String reqParamFilerFile(ProceedingJoinPoint joinPoint) {
         // 过滤body请求参数
         String bodyParam = paramPrintFilerService == null
@@ -189,12 +180,9 @@ public class LogAspect {
      * @return 注解信息
      */
     private APIMessage getAPIMessage(ProceedingJoinPoint joinPoint) {
-        Signature signature = joinPoint.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        Method method = methodSignature.getMethod();
-        APIMessage apiMessage = method.getAnnotation(APIMessage.class);
         // 获取接口上的注解
-        return apiMessage;
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        return methodSignature.getMethod().getAnnotation(APIMessage.class);
     }
 
     /**
@@ -209,7 +197,7 @@ public class LogAspect {
      * @return: com.jiahe.ylq.common.entity.dto.LogDTO
      * @author: gzc
      */
-    private LogDTO getLogInfo(ProceedingJoinPoint joinPoint, Object result,
+    private LogDTO getLogInfo(String apiMsg, ProceedingJoinPoint joinPoint, Object result,
                               Exception exception, Integer logType,
                               DateTime beginTime, DateTime endTime) {
         LogDTO logDTO = new LogDTO();
@@ -223,7 +211,7 @@ public class LogAspect {
             // 接口调用耗时
             logDTO.setCostTime(DateUtil.betweenMs(beginTime, endTime));
             // 接口描述
-            logDTO.setApiMsg(WebContextUtil.getApiMsg());
+            logDTO.setApiMsg(apiMsg);
             // 获取请求路径
             logDTO.setRequestUrl(WebContextUtil.getServletPath());
 
@@ -258,7 +246,6 @@ public class LogAspect {
             }
         } catch (Exception e) {
             log.error("切面封装日志信息异常:{}", e);
-//			logDTO.setResponse(ExceptionUtils.getExceptionDetails(exception, false));
         }
         return logDTO;
     }
