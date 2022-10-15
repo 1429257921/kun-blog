@@ -47,6 +47,10 @@ public class KunUser {
     @TableField("card_id")
     private String cardId;
     /**
+     * 性别 0女 1男
+     */
+    private String sex;
+    /**
      * 用户备注
      */
     private String mark;
@@ -162,4 +166,5 @@ public class KunUser {
      */
     @TableField("is_del")
     private Boolean isDel;
+
 }

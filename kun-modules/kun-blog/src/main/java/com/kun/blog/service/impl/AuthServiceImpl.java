@@ -1,21 +1,32 @@
 package com.kun.blog.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
+import com.kun.blog.constant.RegConstant;
+import com.kun.blog.entity.po.KunUser;
 import com.kun.blog.entity.req.UserLoginReq;
+import com.kun.blog.entity.req.UserRegisterReq;
 import com.kun.blog.entity.req.ValidatedCodeReq;
 import com.kun.blog.entity.vo.GetVerificationCodeVO;
 import com.kun.blog.entity.vo.UserLoginVO;
+import com.kun.blog.entity.vo.UserRegisterVO;
 import com.kun.blog.security.JwtProperties;
 import com.kun.blog.security.dto.JwtUser;
 import com.kun.blog.service.AuthService;
+import com.kun.blog.service.IKunUserService;
 import com.kun.blog.service.JwtTokenService;
+import com.kun.blog.util.RsaUtil;
 import com.kun.common.core.exception.BizException;
+import com.kun.common.database.util.QueryHelpPlus;
 import com.kun.common.redis.service.RedisService;
 import com.wf.captcha.ArithmeticCaptcha;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -34,8 +45,12 @@ public class AuthServiceImpl implements AuthService {
 
     private final RedisService redisService;
     private final UserDetailsService userDetailsService;
+    private final IKunUserService iKunUserService;
     private final JwtProperties jwtProperties;
-    private final JwtTokenService tokenUtil;
+    private final JwtTokenService jwtTokenService;
+
+    @Value("${rsa.private-key}")
+    private String rsaPrivateKey;
 
     @Override
     public GetVerificationCodeVO getCode() {
@@ -52,7 +67,7 @@ public class AuthServiceImpl implements AuthService {
         }
         String uuid = jwtProperties.getCodeKey() + IdUtil.simpleUUID();
         // 保存
-        redisService.setCacheObject(uuid, result, 2L, TimeUnit.MINUTES);
+        redisService.setCacheObject(uuid, result, 1L, TimeUnit.MINUTES);
         // 验证码信息
         GetVerificationCodeVO getVerificationCodeVO = new GetVerificationCodeVO();
         getVerificationCodeVO.setUuid(uuid);
@@ -66,21 +81,54 @@ public class AuthServiceImpl implements AuthService {
         if (StrUtil.isBlank(code) || StrUtil.isBlank(codeReq.getCode()) || !code.equals(codeReq.getCode())) {
             throw new BizException("验证码错误");
         }
+        // 删除验证码
+        redisService.deleteObject(codeReq.getUuid());
+    }
+
+    @Override
+    public UserRegisterVO register(UserRegisterReq userRegisterReq) {
+        if (!ReUtil.isMatch(RegConstant.USER_NAME_REG, userRegisterReq.getUserName())) {
+            throw new BizException("账号名格式错误！");
+        }
+        // 密码rsa解密
+        String passWord = RsaUtil.decryptByPrivateKey(userRegisterReq.getPassWord(), rsaPrivateKey);
+        if (!ReUtil.isMatch(RegConstant.USER_PASS_WORD_REG, passWord)) {
+            throw new BizException("密码格式错误！");
+        }
+        KunUser kunUser = new KunUser();
+        kunUser.setUsername(userRegisterReq.getUserName());
+        kunUser.setPassword(passWord);
+        kunUser.setUserType("0");
+        try {
+            if (!iKunUserService.save(kunUser)) {
+                throw new BizException("用户信息入库失败");
+            }
+        } catch (DuplicateKeyException dke) {
+            throw new BizException("用户已存在");
+        }
+        return null;
     }
 
     @Override
     public UserLoginVO login(UserLoginReq userLoginReq) {
-        log.info("进入登录接口");
+        // rsa解密
+        String passWord = RsaUtil.decryptByPrivateKey(userLoginReq.getPassWord(), rsaPrivateKey);
+
         UserLoginVO userLoginVO = new UserLoginVO();
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(userLoginReq.getUserName(), userLoginReq.getPassWord());
+                new UsernamePasswordAuthenticationToken(userLoginReq.getUserName(), passWord);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
         // 生成令牌
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userLoginReq.getUserName());
-        String token = tokenUtil.generateToken(userDetails);
+        JwtUser jwtUser = (JwtUser) userDetails;
+        if (!StrUtil.equals(jwtUser.getPassword(), passWord)) {
+            throw new BizException("密码错误！");
+        }
+        String token = jwtTokenService.generateToken(userDetails);
         // 返回 token 与 用户信息
-//        userLoginVO.setUser((JwtUser) userDetails);
         userLoginVO.setUserToken(jwtProperties.getTokenStartWith() + token);
+        userLoginVO.setUser(jwtUser);
         return userLoginVO;
     }
 

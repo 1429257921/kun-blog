@@ -1,9 +1,11 @@
 package com.kun.blog.service;
 
 import com.kun.blog.entity.req.UserLoginReq;
+import com.kun.blog.entity.req.UserRegisterReq;
 import com.kun.blog.entity.req.ValidatedCodeReq;
 import com.kun.blog.entity.vo.GetVerificationCodeVO;
 import com.kun.blog.entity.vo.UserLoginVO;
+import com.kun.blog.entity.vo.UserRegisterVO;
 
 /**
  * 秘钥接口
@@ -21,6 +23,21 @@ public interface AuthService {
     GetVerificationCodeVO getCode();
 
     /**
+     * 校验验证码
+     *
+     * @param validatedCodeReq
+     */
+    void validatedCode(ValidatedCodeReq validatedCodeReq);
+
+    /**
+     * 用户注册
+     *
+     * @param userRegisterReq
+     * @return
+     */
+    UserRegisterVO register(UserRegisterReq userRegisterReq);
+
+    /**
      * 登录
      *
      * @param userLoginReq
@@ -28,10 +45,5 @@ public interface AuthService {
      */
     UserLoginVO login(UserLoginReq userLoginReq);
 
-    /**
-     * 校验验证码
-     *
-     * @param validatedCodeReq
-     */
-    void validatedCode(ValidatedCodeReq validatedCodeReq);
+
 }

@@ -355,7 +355,7 @@ public class RsaUtil {
     /**
      * 随机生成密钥对
      */
-    public static void main(String[] args) throws Exception {
+//    public static void main(String[] args) throws Exception {
 //        // KeyPairGenerator类用于生成公钥和私钥对，基于RSA算法生成对象
 //        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
 //        // 初始化密钥对生成器，密钥大小为96-1024位
@@ -372,5 +372,5 @@ public class RsaUtil {
 //        String privateKeyString = Base64.encode(privateKey.getEncoded());
 //        System.out.println("公钥publicKeyString->\n" + publicKeyString);
 //        System.out.println("私钥privateKeyString->\n" + privateKeyString);
-    }
+//    }
 }

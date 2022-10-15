@@ -18,6 +18,6 @@ public class UserLoginVO {
     /**
      * 用户信息
      */
-//    private JwtUser user;
+    private JwtUser user;
 
 }

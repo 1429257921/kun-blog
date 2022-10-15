@@ -67,6 +67,9 @@ ok:
     # 写入超时时间(秒)
     write-timeout: 300
 
+rsa:
+  private-key: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAKsz7P8PAPjN/QLOXz9+DsH6Z9nz34sjM2gUGQtVjNIX40y0ii+i+Vl3fcuCOmLvcSpAztrlJCFNvN9UX9VDK9XCOgS/fNV9bWzkqpXw0j7V9C1nwR/+8UM4oTPkJjHMmCC9chAW+lsk++6lZbFXzg7mh6d5NDMjdqqU4iSegcPNAgMBAAECgYB9SUqufPRhH52AaDYb6Mwz+GP3hBibYe9EwzBwsvKS7RhSEezuX33Kkz9jprHDpSZTnYnDdtyx4onNhZl8H+P7HIEemz3xKm5LFuXxldNtRxCti0gYm0xGHcQhpaEsmnv7Hjx5dZjTr39sq5FGuQHn2O3Ue1M7mGT/ne+r9KcZAQJBAPNDOsn1VcEBhN9/Ckgw3nsVZUeaXy9ObR39TVZQ06oMXCXjjJtnc0CB0eKk54vl45xY5J0cK9EcOCrRHiuDv7UCQQC0KsicrzBD4D2RWyftyAFfMa9WT3hpoxXDIZ6BhSk1E1xCMnL9E9wa3PIgwG82fQZLZAZSuOTMhXKylCdZe5K5AkEAkhY0ruYLep3r6sADL7lRUn9V1DtLoEAr3U+p6wUdJ8jGaeaOISFuIDYWElLPzr7fApyLpiIt2iVlQalVwfIb5QJAQp8Xc6jsZg0Ddz6H80tkBnlu5rGYSye9IlzKKga9iBzSnr/c+WxglaZh+m5uMW3l5/bix7ALGv21vgc+zb3+MQJBAI7+qj+YAhNa6GvV/qTi7Xbmi397DXQEoPtkU/exb3J4GQm17YTEFPT5Wp/FsRdRml9MEtM6ba1c9016vYDfDOw=
+
 #jwt
 jwt:
   header: Authorization
@@ -78,6 +81,6 @@ jwt:
   # 令牌过期时间 此处单位/毫秒 ，默认4小时，可在此网站生成 https://www.convertworld.com/zh-hans/time/milliseconds.html
   token-validity-in-seconds: 14400000
   # 在线用户key
-  online-key: online-token
+  online-key: online-token_
   # 验证码
-  code-key: code-key
+  code-key: code-key_

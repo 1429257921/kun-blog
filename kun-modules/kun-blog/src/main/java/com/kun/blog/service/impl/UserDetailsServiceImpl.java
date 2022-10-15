@@ -1,8 +1,15 @@
 package com.kun.blog.service.impl;
 
-import com.kun.blog.entity.dto.UserDto;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.kun.blog.entity.po.KunUser;
 import com.kun.blog.security.dto.JwtUser;
+import com.kun.blog.service.IKunUserService;
+import com.kun.common.core.exception.Assert;
+import com.kun.common.core.exception.BizException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -16,44 +23,42 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 2022/10/12 1:18
  */
 @Slf4j
+@RequiredArgsConstructor
 @Service("userDetailsService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    private final IKunUserService kunUserService;
+
     @Override
     public UserDetails loadUserByUsername(String username) {
-//        UserDto user = userService.findByName(username);
-//        if (user == null) {
-//            throw new BadRequestException("账号不存在");
-//        } else {
-//            if (!user.getEnabled()) {
-//                throw new BadRequestException("账号未激活");
-//            }
-//            return createJwtUser(user);
-//        }
-        UserDto userDto = new UserDto();
-        userDto.setUsername(username);
-        userDto.setPassword("aaa");
-        return createJwtUser(userDto);
-
+        KunUser kunUser = new LambdaQueryChainWrapper<>(kunUserService.getBaseMapper())
+                .eq(KunUser::getUsername, username)
+                .one();
+        Assert.notNull(kunUser, "账号不存在");
+        if (kunUser.getStatus() == null || !kunUser.getStatus()) {
+            throw new BizException("账号异常或被封禁");
+        }
+        if (kunUser.getIsDel() == null || kunUser.getIsDel()) {
+            throw new BizException("账号已注销");
+        }
+        return createJwtUser(kunUser);
     }
 
 
-    private UserDetails createJwtUser(UserDto user) {
+    private UserDetails createJwtUser(KunUser kunUser) {
         return new JwtUser(
-                1L,
-                user.getUsername(),
+                kunUser.getUid(),
+                kunUser.getUsername(),
+                kunUser.getNickname(),
+                kunUser.getSex(),
+                kunUser.getPassword(),
+                kunUser.getAvatar(),
                 "",
-                "",
-                user.getPassword(),
-                "",
-                "",
-                "",
-                "",
-                "",
+                kunUser.getPhone(),
                 null,
                 true,
-                null,
+                kunUser.getCreateTime(),
                 null
         );
     }

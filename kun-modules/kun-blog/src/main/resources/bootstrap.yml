@@ -12,15 +12,16 @@ spring:
     active: local
 
 # 打印执行的sql语句
-logging:
-  level:
-    com.kun.blog.mapper: debug
+#logging:
+#  level:
+#    com.kun.blog.mapper: debug
 
 # mybatis-plus相关配置
 mybatis-plus:
   # 配置mapper的扫描，找到所有的mapper.xml映射文件
   #  mapperLocations: classpath:mapper/**/*.xml
   configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     # 驼峰命名 默认为true
     #    map-underscore-to-camel-case: true
     # 在一般查询中，如果用map接受查询结果时，会自动将查询结果为null的字段忽略，这样就造成取参数时报空指针异常的情况

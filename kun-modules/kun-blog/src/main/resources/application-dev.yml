@@ -82,3 +82,6 @@ jwt:
   # 验证码
   code-key: code-key
 
+# 是否限制单用户登录
+single:
+  login: false

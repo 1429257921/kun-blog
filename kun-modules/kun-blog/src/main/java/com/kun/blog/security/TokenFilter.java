@@ -38,7 +38,7 @@ public class TokenFilter extends GenericFilterBean {
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        log.info("进入token过滤器");
+//        log.info("进入token过滤器");
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
         String requestRri = httpServletRequest.getRequestURI();

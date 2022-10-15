@@ -2,6 +2,7 @@ package com.kun.common.database.util;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kun.common.database.anno.Query;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +21,12 @@ import java.util.List;
  * @since 2022/10/6 14:27
  */
 @Slf4j
-@SuppressWarnings({"unchecked", "all"})
+@SuppressWarnings("all")
 public class QueryHelpPlus {
 
+    /**
+     * 获取查询包装器
+     */
     public static <R, Q> QueryWrapper getPredicate(R obj, Q query) {
         QueryWrapper<R> queryWrapper = new QueryWrapper<R>();
         if (query == null) {
@@ -37,7 +41,7 @@ public class QueryHelpPlus {
                 if (q != null) {
                     String propName = q.propName();
                     String blurry = q.blurry();
-                    String attributeName = isBlank(propName) ? field.getName() : propName;
+                    String attributeName = StrUtil.isBlank(propName) ? field.getName() : propName;
                     attributeName = humpToUnderline(attributeName);
                     Class<?> fieldType = field.getType();
                     Object val = field.get(query);
@@ -116,23 +120,21 @@ public class QueryHelpPlus {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-
         return queryWrapper;
     }
 
-
-    private static boolean isBlank(final CharSequence cs) {
-        int strLen;
-        if (cs == null || (strLen = cs.length()) == 0) {
-            return true;
-        }
-        for (int i = 0; i < strLen; i++) {
-            if (!Character.isWhitespace(cs.charAt(i))) {
-                return false;
-            }
-        }
-        return true;
-    }
+//    private static boolean isBlank(final CharSequence cs) {
+//        int strLen;
+//        if (cs == null || (strLen = cs.length()) == 0) {
+//            return true;
+//        }
+//        for (int i = 0; i < strLen; i++) {
+//            if (!Character.isWhitespace(cs.charAt(i))) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 
     private static List<Field> getAllFields(Class clazz, List<Field> fields) {
         if (clazz != null) {
@@ -148,7 +150,6 @@ public class QueryHelpPlus {
      * @param para
      *        驼峰命名的字符串
      */
-
     public static String humpToUnderline(String para) {
         StringBuilder sb = new StringBuilder(para);
         int temp = 0;//定位

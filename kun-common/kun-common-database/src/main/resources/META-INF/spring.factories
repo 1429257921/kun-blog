@@ -1,7 +1,7 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.kun.common.database.interceptor.SqlLogInterceptor,\
   com.kun.common.database.config.DruidDataSourceWrapper,\
-  com.kun.common.database.config.MybatisPlusConfig
+  com.kun.common.database.config.MybatisPlusConfig,\
+  com.kun.common.database.handler.KunMetaObjectHandler
 
 
   

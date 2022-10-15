@@ -6,13 +6,13 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
 /**
- * 用户登录接口请求参数
+ * 用户注册接口请求参数
  *
  * @author gzc
  * @since 2022/10/7 21:08
  **/
 @Data
-public class UserLoginReq {
+public class UserRegisterReq {
     /**
      * 用户名
      */
@@ -22,9 +22,12 @@ public class UserLoginReq {
     /**
      * 密码
      */
-    @Query(propName = "password")
     @NotBlank(message = "密码为空")
     private String passWord;
+    /**
+     * 电子邮箱
+     */
+    private String email;
     /**
      * 验证码
      */

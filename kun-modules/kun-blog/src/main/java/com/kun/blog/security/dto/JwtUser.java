@@ -39,16 +39,16 @@ public class JwtUser implements UserDetails {
 
     private final String phone;
 
-    private final String dept;
-
-    private final String job;
+//    private final String dept;
+//
+//    private final String job;
 
     @JsonIgnore
     private final Collection<SimpleGrantedAuthority> authorities;
 
     private final boolean enabled;
 
-    private Timestamp createTime;
+    private Date createTime;
 
     @JsonIgnore
     private final Date lastPasswordResetDate;
