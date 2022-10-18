@@ -16,6 +16,10 @@ public class UserLoginVO {
      */
     private String userToken;
     /**
+     * 过期时间(单位毫秒)
+     */
+    private Long expireTime;
+    /**
      * 用户信息
      */
     private JwtUser user;

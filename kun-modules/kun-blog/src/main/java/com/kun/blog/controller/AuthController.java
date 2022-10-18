@@ -33,7 +33,7 @@ public class AuthController {
      * @author gzc
      * @since 2022/10/12 1:22
      */
-    @Limit(period = 3,count = 1)
+    @Limit(period = 2,count = 1)
     @APIMessage(value = "获取验证码", printReqParam = false)
     @AnonymousAccess
     @GetMapping(value = "getCode")

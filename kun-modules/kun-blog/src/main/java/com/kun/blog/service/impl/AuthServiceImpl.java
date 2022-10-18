@@ -1,5 +1,6 @@
 package com.kun.blog.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
@@ -18,7 +19,6 @@ import com.kun.blog.service.IKunUserService;
 import com.kun.blog.service.JwtTokenService;
 import com.kun.blog.util.RsaUtil;
 import com.kun.common.core.exception.BizException;
-import com.kun.common.database.util.QueryHelpPlus;
 import com.kun.common.redis.service.RedisService;
 import com.wf.captcha.ArithmeticCaptcha;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -99,6 +98,7 @@ public class AuthServiceImpl implements AuthService {
         kunUser.setUsername(userRegisterReq.getUserName());
         kunUser.setPassword(passWord);
         kunUser.setUserType("0");
+        kunUser.setNickname("用户" + DateUtil.currentSeconds());
         try {
             if (!iKunUserService.save(kunUser)) {
                 throw new BizException("用户信息入库失败");
@@ -129,6 +129,7 @@ public class AuthServiceImpl implements AuthService {
         // 返回 token 与 用户信息
         userLoginVO.setUserToken(jwtProperties.getTokenStartWith() + token);
         userLoginVO.setUser(jwtUser);
+        userLoginVO.setExpireTime(jwtProperties.getTokenValidityInSeconds());
         return userLoginVO;
     }
 

@@ -53,6 +53,7 @@ public class TokenFilter extends GenericFilterBean {
         } catch (ExpiredJwtException e) {
             log.error("jwtToken过期,{}", e);
         }
+        log.info("token-<{}", authToken);
         String userName = StrUtil.isNotBlank(authToken) ? jwtTokenService.getUsernameFromToken(authToken) : null;
         SecurityContext securityContext = SecurityContextHolder.getContext();
         if (StrUtil.isNotBlank(userName)
