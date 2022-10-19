@@ -1,6 +1,7 @@
 package com.kun.blog.service;
 
 import com.kun.blog.entity.po.KunUser;
+import com.kun.blog.entity.vo.GetUserDetailsVO;
 import com.kun.common.database.service.BaseService;
 
 /**
@@ -11,4 +12,10 @@ import com.kun.common.database.service.BaseService;
  */
 public interface IKunUserService extends BaseService<KunUser> {
 
+    /**
+     * 获取个人信息
+     *
+     * @return
+     */
+    GetUserDetailsVO getUserDetails();
 }

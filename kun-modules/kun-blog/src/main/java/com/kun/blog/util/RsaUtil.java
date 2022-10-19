@@ -3,12 +3,13 @@ package com.kun.blog.util;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.io.IoUtil;
 import com.kun.common.core.exception.BizException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
 import java.security.*;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
@@ -18,6 +19,7 @@ import java.security.spec.X509EncodedKeySpec;
  * @author gzc
  * @since 2022/10/11 2:17
  **/
+@Component
 public class RsaUtil {
 
     /**
@@ -44,8 +46,19 @@ public class RsaUtil {
      * 秘钥KEY工厂
      */
     private static KeyFactory keyFactory;
-//	public static String PrivateKey = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAK+H0YHxP/AvH1I9yvewyqmYtoe3NfJeI0nhmdp5EHErWmpghSk2qaq+tk+BXNskxtJ2079Mwh039GO+sl+iJ7hwfPX0TlI0jMZQxtcYyEpOQRwgDVfWfkTucO4fkTyIzo1MSgUxoKbN0+pYWHcGKELPlD3vOrueCJLz76qWBtQPAgMBAAECgYBj8e21E2zYkbw/07dx+VQr5SxpckRhUIC/XJmB8FUQWyMMVxD7Ooi5FAYylvIMRZB/3fELh+UvReD9umNOWMJMKrV/PKbx0W3nLvodEQ93MfPDbpPmylNb9EBkDxvSpCw8Gei7JvIL5/WI+qnlqxZExb9Bze62je/f7Z8xt+qdgQJBAPTg/VmQwIKIAjwRVi7a5Ld/UlcOM8VAuxzkKflK+uX606s0DkEp2l/N7iJJdATeY9y9mRZwbTydAL5UYNS8+FECQQC3gJJC1L12Ms7qB2NdeqKw42TzH6ZC1utuEp9vvFMIq2Ju+OWgRbbDy4ddXMAtvnFLAdbyTp/1iB/u+oqa3k5fAkEAnncCO/WKPm4ZVBm79bI9E+nWtPNB2UHcVAPqjaJR3oWEeGPFXbHh2OGAWrvB0my/ntcqu/ShG/pVwtUDnGd1IQJAHg+B5lDTeLl6C/yJ2pZscG3P68QTiH+Msct7MuK294Sb63H6q/a/qfN9iV3YXaYFCTST8b3PlnlmQc/pRNWGIQJABrVuzW8P8nE3i5VoVQk/AB0uq9bngmDk+hbWsvwfibdoJJPvMN7sH3+czdaY3eV2ojTdSRo+HRV0S/mIq8B17g==";
-//	public static String publicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCvh9GB8T/wLx9SPcr3sMqpmLaHtzXyXiNJ4ZnaeRBxK1pqYIUpNqmqvrZPgVzbJMbSdtO/TMIdN/RjvrJfoie4cHz19E5SNIzGUMbXGMhKTkEcIA1X1n5E7nDuH5E8iM6NTEoFMaCmzdPqWFh3BihCz5Q97zq7ngiS8++qlgbUDwIDAQAB";
+
+    @Value("${rsa.private-key}")
+    private String privateKey;
+    private static String PRIVATE_KEY;
+
+    /**
+     * 初始化
+     */
+    @PostConstruct
+    public void init() {
+        System.out.println("私钥->" + privateKey);
+        PRIVATE_KEY = this.privateKey;
+    }
 
     /**
      *初始化KEY工厂
@@ -200,12 +213,18 @@ public class RsaUtil {
     }
 
     /**
+     * 使用私钥解密
+     *
+     * @param dataStr 加密原文
+     */
+    public static String decryptByPrivateKey(String dataStr) {
+        return decryptByPrivateKey(dataStr, PRIVATE_KEY);
+    }
+
+    /**
      * @param dataStr           加密的原文
      * @param contentPrivateKey 私钥
      * @description: 原文私钥分段解密
-     * @return: java.lang.String
-     * @author: gzc
-     * @date: 2021-12-1 16:10
      */
     public static String decryptByPrivateKey(String dataStr, String contentPrivateKey) throws BizException {
         ByteArrayOutputStream baos = null;

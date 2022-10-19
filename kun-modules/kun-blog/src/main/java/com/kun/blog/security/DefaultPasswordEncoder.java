@@ -1,5 +1,7 @@
 package com.kun.blog.security;
 
+import cn.hutool.crypto.SecureUtil;
+import cn.hutool.crypto.digest.MD5;
 import com.kun.common.core.exception.Assert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,7 +19,8 @@ public class DefaultPasswordEncoder extends BCryptPasswordEncoder {
 
     @Override
     public String encode(CharSequence rawPassword) {
-        return rawPassword.toString();
+        // md5加密
+        return SecureUtil.md5(String.valueOf(rawPassword));
     }
 
     @Override
@@ -25,6 +28,7 @@ public class DefaultPasswordEncoder extends BCryptPasswordEncoder {
         log.info("校验密码");
         Assert.notNull(rawPassword, "rawPassword cannot be null");
         Assert.notBlank(encodedPassword, "encodedPassword is null");
-        return encodedPassword.equals(rawPassword);
+        String encode = SecureUtil.md5(String.valueOf(rawPassword));
+        return encodedPassword.equals(encode);
     }
 }

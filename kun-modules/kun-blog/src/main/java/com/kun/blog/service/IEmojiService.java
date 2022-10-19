@@ -5,6 +5,7 @@ import com.kun.blog.entity.req.EmojiGetConfigReq;
 import com.kun.blog.entity.req.EmojiSearchReq;
 import com.kun.blog.entity.po.Emoji;
 import com.kun.blog.entity.vo.EmojiGetConfigVO;
+import com.kun.blog.entity.vo.EmojiUploadVO;
 import com.kun.common.database.service.BaseService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,19 +29,4 @@ public interface IEmojiService extends BaseService<Emoji> {
      */
     PageInfo<Emoji> search(EmojiSearchReq emojiSearchReq, Pageable pageable);
 
-    /**
-     * 获取配置信息
-     *
-     * @param emojiSearchReq
-     * @return
-     */
-    EmojiGetConfigVO getConfig(EmojiGetConfigReq emojiSearchReq);
-
-    /**
-     * 增加表情包
-     *
-     * @param file
-     * @return
-     */
-    Object upload(MultipartFile file) throws IOException;
 }

@@ -23,12 +23,12 @@ import com.kun.common.redis.service.RedisService;
 import com.wf.captcha.ArithmeticCaptcha;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -47,9 +47,7 @@ public class AuthServiceImpl implements AuthService {
     private final IKunUserService iKunUserService;
     private final JwtProperties jwtProperties;
     private final JwtTokenService jwtTokenService;
-
-    @Value("${rsa.private-key}")
-    private String rsaPrivateKey;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public GetVerificationCodeVO getCode() {
@@ -90,13 +88,15 @@ public class AuthServiceImpl implements AuthService {
             throw new BizException("账号名格式错误！");
         }
         // 密码rsa解密
-        String passWord = RsaUtil.decryptByPrivateKey(userRegisterReq.getPassWord(), rsaPrivateKey);
+        String passWord = RsaUtil.decryptByPrivateKey(userRegisterReq.getPassWord());
         if (!ReUtil.isMatch(RegConstant.USER_PASS_WORD_REG, passWord)) {
             throw new BizException("密码格式错误！");
         }
+        // 密码md5加密存到数据库
+        String encodePassWord = passwordEncoder.encode(passWord);
         KunUser kunUser = new KunUser();
         kunUser.setUsername(userRegisterReq.getUserName());
-        kunUser.setPassword(passWord);
+        kunUser.setPassword(encodePassWord);
         kunUser.setUserType("0");
         kunUser.setNickname("用户" + DateUtil.currentSeconds());
         try {
@@ -112,19 +112,20 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserLoginVO login(UserLoginReq userLoginReq) {
         // rsa解密
-        String passWord = RsaUtil.decryptByPrivateKey(userLoginReq.getPassWord(), rsaPrivateKey);
+        String passWord = RsaUtil.decryptByPrivateKey(userLoginReq.getPassWord());
 
         UserLoginVO userLoginVO = new UserLoginVO();
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(userLoginReq.getUserName(), passWord);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
         // 生成令牌
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userLoginReq.getUserName());
         JwtUser jwtUser = (JwtUser) userDetails;
-        if (!StrUtil.equals(jwtUser.getPassword(), passWord)) {
+        // 校验密码
+        if (!passwordEncoder.matches(passWord, jwtUser.getPassword())) {
             throw new BizException("密码错误！");
         }
+
         String token = jwtTokenService.generateToken(userDetails);
         // 返回 token 与 用户信息
         userLoginVO.setUserToken(jwtProperties.getTokenStartWith() + token);
