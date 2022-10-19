@@ -1,11 +1,7 @@
 package com.kun.blog.entity.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -31,6 +27,10 @@ public class GetUserDetailsVO {
      * 性别 0女 1男
      */
     private String sex;
+    /**
+     * 电子邮箱
+     */
+    private String email;
     /**
      * 用户备注
      */

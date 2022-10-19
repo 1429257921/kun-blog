@@ -34,7 +34,7 @@ public class FileController {
      */
     @Limit(prefix = CacheConstants.PC_LIMIT_PREFIX)
     @APIMessage(value = "上传文件", printReqParam = false)
-    @GetMapping("upload")
+    @RequestMapping("upload")
     public ResponseEntity<Object> upload(@RequestParam("file") MultipartFile file) throws Exception {
         return new ResponseEntity<>(kunFileService.upload(file), HttpStatus.OK);
     }

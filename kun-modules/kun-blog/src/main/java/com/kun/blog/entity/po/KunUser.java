@@ -168,5 +168,8 @@ public class KunUser {
      */
     @TableField("is_del")
     private Boolean isDel;
-
+    /**
+     * 电子邮箱
+     */
+    private String email;
 }
