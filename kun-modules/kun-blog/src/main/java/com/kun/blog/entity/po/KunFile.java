@@ -8,12 +8,11 @@ import lombok.Data;
 
 import java.util.Date;
 
-
 /**
  * 文件信息
  *
  * @author gzc
- * @since 2022-10-19 02:24:22
+ * @since 2022-10-29 10:01:42
  */
 @Data
 @TableName("kun_file")
