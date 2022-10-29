@@ -59,12 +59,11 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
         </dependency>
+        <!-- 验证码生成 -->
         <dependency>
             <groupId>com.github.whvcse</groupId>
             <artifactId>easy-captcha</artifactId>
-            <version>1.6.2</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -101,24 +100,30 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- docker -->
-<!--            <plugin>-->
-<!--                <groupId>com.spotify</groupId>-->
-<!--                <artifactId>docker-maven-plugin</artifactId>-->
-<!--                <version>0.4.13</version>-->
-<!--                <configuration>-->
-<!--                    &lt;!&ndash; made of '[a-z0-9-_.]' &ndash;&gt;-->
-<!--                    <imageName>${project.artifactId}:${project.version}</imageName>-->
-<!--                    <dockerDirectory>${project.basedir}</dockerDirectory>-->
-<!--                    <resources>-->
-<!--                        <resource>-->
-<!--                            <targetPath>/</targetPath>-->
-<!--                            <directory>${project.build.directory}</directory>-->
-<!--                            <include>${project.build.finalName}.jar</include>-->
-<!--                        </resource>-->
-<!--                    </resources>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+            <!--打包docker插件相关参数的配置-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.13</version>
+                <configuration>
+                    <!--打包的镜像名-->
+                    <imageName>${project.artifactId}:${project.version}</imageName>
+                    <!--Dockerfile文件位置，以项目的 root 目录为根节点，建议到单独建立一个目录-->
+                    <dockerDirectory>${project.basedir}/src/main/docker/</dockerDirectory>
+                    <imageTags>
+                        <imageTag>latest</imageTag>
+                    </imageTags>
+                    <!--执行构建docker镜像的时候需要哪些文件，springboot项目指定 打包好的jar 镜像就好-->
+                    <resources>
+                        <resource>
+                            <!--这里指定的文件是target中的jar文件-->
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

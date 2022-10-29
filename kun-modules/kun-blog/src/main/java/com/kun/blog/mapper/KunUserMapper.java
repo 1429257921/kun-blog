@@ -2,7 +2,6 @@ package com.kun.blog.mapper;
 
 import com.kun.blog.entity.po.KunUser;
 import com.kun.common.database.mapper.CoreMapper;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 用户表kun_user表持久层接口

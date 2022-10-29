@@ -1,5 +1,7 @@
 package com.kun.blog.config;
 
+import cn.hutool.core.util.StrUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -17,6 +19,7 @@ import java.util.List;
  * @author gzc
  * @since 2022/10/6 19:28
  */
+@Slf4j
 @Component
 public class GlobalFormDateConvert implements Converter<String, Date> {
 
@@ -51,14 +54,13 @@ public class GlobalFormDateConvert implements Converter<String, Date> {
      * @return
      */
     public Date parseDate(String source, String format) {
-        System.out.println("parseDate转换日期");
         Date date = null;
         try {
-            //日期格式转换器
+            // 日期格式转换器
             DateFormat dateFormat = new SimpleDateFormat(format);
             date = dateFormat.parse(source);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("日期格式转换器发生异常->{}", e);
         }
         return date;
     }
@@ -72,13 +74,11 @@ public class GlobalFormDateConvert implements Converter<String, Date> {
      */
     @Override
     public Date convert(String source) {
-        System.out.println("convert日期格式转换器");
-        if (StringUtils.isEmpty(source)) {
+        if (StrUtil.isBlank(source)) {
             return null;
         }
         // 去除首尾空格
         source = source.trim();
-        DateFormat dateFormat = new SimpleDateFormat(param1);
 
         // 正则表达式判断是哪一种格式参数
         if (source.matches("^\\d{4}-\\d{1,2}$")) {

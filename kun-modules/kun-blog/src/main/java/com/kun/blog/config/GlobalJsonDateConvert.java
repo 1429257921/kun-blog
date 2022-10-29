@@ -1,5 +1,6 @@
 package com.kun.blog.config;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -38,9 +39,9 @@ public class GlobalJsonDateConvert extends StdDateFormat {
     }
 
     private Date getDate(String dateStr, ParsePosition pos) {
-        System.out.println("json格式日期转换");
-        SimpleDateFormat sdf = null;
-        if (StringUtils.isEmpty(dateStr)) {
+//        System.out.println("json格式日期转换");
+        SimpleDateFormat sdf;
+        if (StrUtil.isBlank(dateStr)) {
             return null;
         } else if (dateStr.matches("^\\d{4}-\\d{1,2}$")) {
             sdf = new SimpleDateFormat("yyyy-MM");

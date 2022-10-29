@@ -14,7 +14,7 @@ spring:
   # 数据源配置
   datasource:
     druid:
-      url: jdbc:mysql://${KUN_BLOG_SERVER_IP}:3306/kun-blog?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://${KUN_BLOG_SERVER_IP}:3306/kun-cloud?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
       username: ${KUN_BLOG_DATASOURCE_USERNAME}
       password: ${KUN_BLOG_DATASOURCE_PASSWORD}
       driver-class-name: com.mysql.cj.jdbc.Driver

@@ -2,7 +2,6 @@ package com.kun.blog.mapper;
 
 import com.kun.blog.entity.po.KunFile;
 import com.kun.common.database.mapper.CoreMapper;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 文件信息kun_file表持久层接口
