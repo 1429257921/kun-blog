@@ -1,0 +1,15 @@
+server:
+  port: 9200
+spring:
+  application:
+    name: rabbitmq-demo
+  rabbitmq:
+    host: 112.74.169.107
+    port: 5672
+    username: admin
+    password: admin
+
+rocketmq:
+  name-server: 116.205.172.254:9876
+  producer:
+    group: my-producer-group
