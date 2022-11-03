@@ -1,6 +1,10 @@
 package com.demo.config;
 
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.ReturnedMessage;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,5 +26,7 @@ public class RabbitMqConfig {
         // 第一个参数是队列名 第二个是持久化
         return new Queue("sms_simple_queue", true);
     }
+
+
 
 }
