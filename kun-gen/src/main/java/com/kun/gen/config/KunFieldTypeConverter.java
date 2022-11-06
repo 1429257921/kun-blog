@@ -41,9 +41,9 @@ public class KunFieldTypeConverter extends MySqlTypeConvert {
                 break;
             }
         }
-        System.out.println("mysql->" + ct.getType() + "，java->" + convertTypeName);
+//        System.out.println("mysql->" + ct.getType() + "，java->" + convertTypeName);
         if (StrUtil.isNotBlank(convertTypeName)) {
-            System.out.println("==========================");
+//            System.out.println("==========================");
             String finalConvertTypeName = convertTypeName;
             return new IColumnType() {
                 @Override
@@ -59,7 +59,7 @@ public class KunFieldTypeConverter extends MySqlTypeConvert {
                 }
             };
         }
-        System.out.println("==========================");
+//        System.out.println("==========================");
         return ct;
     }
 }
