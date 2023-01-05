@@ -1,70 +1,78 @@
 package ${package.Entity};
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
+import com.baomidou.mybatisplus.annotation.*;
+import lombok.*;
 
+import java.io.Serializable;
 <#list table.fields as field>
     <#if field.propertyType = "BigDecimal">
 import java.math.BigDecimal;
-        <#break>
+	<#elseif field.propertyType = "LocalDateTime">
+import java.time.LocalDateTime;
+	<#elseif field.propertyType = "LocalDate">
+import java.time.LocalDate;
     </#if>
-	<#if field.propertyType = "Date">
-import java.util.Date;
-        <#break>
-	</#if>
 </#list>
 
 /**
+ * <p>
  * ${table.comment!}
+ * </p>
  *
  * @author ${author}
  * @since ${date}
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
+@EqualsAndHashCode(callSuper = false)
 @TableName("${table.name}")
-public class ${entity} {
+public class ${entity} implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
 <#-- ----------  BEGIN 字段循环遍历  ---------->
 <#list table.fields as field>
+	<#--/**
+	* field.propertyName -> ${field.propertyName}
+	* field.annotationColumnName -> ${field.annotationColumnName}
+	* field.propertyType -> ${field.propertyType}
+	* field.keyFlag -> ${field.keyFlag?string('true', 'false')}
+	* field.name -> ${field.name}
+	* field.fill -> ${field.fill???string('true', 'false')}
+	* field.convert -> ${field.convert?string('true', 'false')}
+	* field.keyIdentityFlag -> ${field.keyIdentityFlag?string('true', 'false')}
+	*/-->
 	/**
 	 * ${field.comment}
 	 */
     <#if field.keyFlag>
-        <#assign keyPropertyName="${field.propertyName}"/>
-    </#if>
-    <#if field.keyFlag>
     <#-- 主键 -->
         <#if field.keyIdentityFlag>
+			<#if field.annotationColumnName == field.propertyName>
+	@TableId(type = IdType.AUTO)
+	        <#else>
 	@TableId(value = "${field.annotationColumnName}", type = IdType.AUTO)
-        <#elseif idType??>
-	@TableId(value = "${field.annotationColumnName}", type = IdType.${idType})
-        <#elseif field.convert>
-	@TableId("${field.annotationColumnName}")
+	        </#if>
         </#if>
-    <#-- 普通字段 -->
-    <#elseif field.fill??>
-    <#-- -----   存在字段填充设置   ----->
-        <#if field.convert>
-	@TableField(value = "${field.annotationColumnName}", fill = FieldFill.${field.fill})
-        <#else>
-	@TableField(fill = FieldFill.${field.fill})
-        </#if>
-<#--    <#elseif field.convert>-->
-<#--	@TableField("${field.annotationColumnName}")-->
-<#--    </#if>-->
-	<#elseif field.annotationColumnName != field.propertyName>
+	<#-- 普通属性 -->
+	<#elseif field.annotationColumnName != field.name>
 	@TableField("${field.annotationColumnName}")
+	<#else>
+	    <#if field.annotationColumnName == "create_time">
+	@TableField(fill = FieldFill.INSERT)
+	    <#elseif field.annotationColumnName == "update_time">
+	@TableField(fill = FieldFill.INSERT_UPDATE, updateStrategy = FieldStrategy.NOT_EMPTY)
+	    </#if>
     </#if>
-<#-- 乐观锁注解 -->
-    <#if (versionFieldName!"") == field.name>
-	@Version
-    </#if>
-<#-- 逻辑删除注解 -->
-    <#if (logicDeleteFieldName!"") == field.name>
+    <#-- 逻辑删除注解 -->
+    <#if field.annotationColumnName == "del_flag" || field.annotationColumnName == "is_delete">
+	@TableField("${field.annotationColumnName}")
 	@TableLogic
+	private Byte delete = 0;
+		<#continue>
     </#if>
 	private ${field.propertyType} ${field.propertyName};
 </#list>

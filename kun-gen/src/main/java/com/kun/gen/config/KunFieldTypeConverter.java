@@ -18,13 +18,13 @@ import java.util.Properties;
  * @since 2022/10/6 16:06
  **/
 public class KunFieldTypeConverter extends MySqlTypeConvert {
-    private static Properties properties = new Properties();
+    private static final Properties PROPERTIES = new Properties();
 
     static {
         InputStream inputStream = KunFieldTypeConverter.class
                 .getClassLoader().getResourceAsStream("type-converter.properties");
         try {
-            properties.load(IoUtil.getReader(inputStream, Charset.defaultCharset()));
+            PROPERTIES.load(IoUtil.getReader(inputStream, Charset.defaultCharset()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,15 +35,25 @@ public class KunFieldTypeConverter extends MySqlTypeConvert {
     public IColumnType processTypeConvert(GlobalConfig config, String fieldType) {
         IColumnType ct = super.processTypeConvert(config, fieldType);
         String convertTypeName = null;
-        for (String item : properties.stringPropertyNames()) {
-            if (ct.getType().toLowerCase().contains(item)) {
-                convertTypeName = properties.getProperty(item);
+        // 第一次全字符匹配
+        for (String item : PROPERTIES.stringPropertyNames()) {
+            if (fieldType.toLowerCase().equalsIgnoreCase(item)) {
+                convertTypeName = PROPERTIES.getProperty(item);
                 break;
             }
         }
-//        System.out.println("mysql->" + ct.getType() + "，java->" + convertTypeName);
+        //第一次全字符匹配未匹配上时，进行第二次模糊匹配
+        if (StrUtil.isBlank(convertTypeName)) {
+            for (String item : PROPERTIES.stringPropertyNames()) {
+                if (fieldType.toLowerCase().contains(item)) {
+                    convertTypeName = PROPERTIES.getProperty(item);
+                    break;
+                }
+            }
+        }
+
+        System.out.println("mysql类型->" + fieldType + "，java类型->" + convertTypeName);
         if (StrUtil.isNotBlank(convertTypeName)) {
-//            System.out.println("==========================");
             String finalConvertTypeName = convertTypeName;
             return new IColumnType() {
                 @Override
@@ -59,7 +69,6 @@ public class KunFieldTypeConverter extends MySqlTypeConvert {
                 }
             };
         }
-//        System.out.println("==========================");
         return ct;
     }
 }
