@@ -1,10 +1,13 @@
 package com.kun.blog.controller;
 
 import com.kun.blog.anno.AnonymousAccess;
-import com.kun.blog.entity.req.UserLoginReq;
-import com.kun.blog.entity.req.UserRegisterReq;
-import com.kun.blog.entity.req.ValidatedCodeReq;
+import com.kun.blog.entity.req.*;
+import com.kun.blog.entity.vo.GetVerificationCodeVO;
+import com.kun.blog.entity.vo.SendPhoneCodeVO;
+import com.kun.blog.entity.vo.UserLoginVO;
+import com.kun.blog.entity.vo.UserRegisterVO;
 import com.kun.blog.service.AuthService;
+import com.kun.common.core.exception.Assert;
 import com.kun.common.log.anno.APIMessage;
 import com.kun.common.redis.aop.Limit;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.Callable;
 
 /**
  * token控制层
@@ -21,13 +26,13 @@ import org.springframework.web.bind.annotation.*;
  **/
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/auth/")
+@RequestMapping("api/auth")
 public class AuthController {
 
     private final AuthService authService;
 
     /**
-     * 获取验证码
+     * 获取图形验证码
      *
      * @author gzc
      * @since 2022/10/12 1:22
@@ -36,22 +41,52 @@ public class AuthController {
     @APIMessage(value = "获取验证码", printReqParam = false)
     @AnonymousAccess
     @GetMapping(value = "getCode")
-    public ResponseEntity<Object> getCode() {
-        return new ResponseEntity<>(authService.getCode(), HttpStatus.OK);
+    public Callable<ResponseEntity<GetVerificationCodeVO>> getCode() {
+        return () -> ResponseEntity.ok(authService.getCode());
     }
 
 
     /**
-     * 校验验证码
+     * 校验图形验证码
      *
      * @author gzc
      * @since 2022/10/13 3:37
      */
-    @APIMessage("校验验证码")
+    @APIMessage("校验图形验证码")
     @AnonymousAccess
     @PostMapping(value = "validatedCode")
     public ResponseEntity<Object> validatedCode(@RequestBody @Validated ValidatedCodeReq validatedCodeReq) {
         authService.validatedCode(validatedCodeReq);
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 发送手机验证码
+     *
+     * @param phone 手机号
+     */
+    @Limit(period = 2, count = 1)
+    @APIMessage(value = "发送手机验证码", printReqParam = false)
+    @AnonymousAccess
+    @GetMapping(value = "sendPhoneCode")
+    public Callable<ResponseEntity<SendPhoneCodeVO>> sendPhoneCode(@RequestParam String phone) {
+        return () -> {
+            Assert.notBlank(phone, "手机号为空");
+            return ResponseEntity.ok(authService.sendPhoneCode(phone));
+        };
+    }
+
+    /**
+     * 校验手机验证码
+     *
+     * @author gzc
+     * @since 2022/10/13 3:37
+     */
+    @APIMessage("校验手机验证码")
+    @AnonymousAccess
+    @PostMapping("validatedPhoneCode")
+    public ResponseEntity<Object> validatedPhoneCode(@RequestBody @Validated ValidatedPhoneCodeReq validatedCodeReq) {
+        authService.validatedPhoneCode(validatedCodeReq);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -65,8 +100,8 @@ public class AuthController {
     @APIMessage("用户登录")
     @AnonymousAccess
     @PostMapping("login")
-    public ResponseEntity<Object> login(@RequestBody @Validated UserLoginReq userLoginReq) {
-        return new ResponseEntity<>(authService.login(userLoginReq), HttpStatus.OK);
+    public ResponseEntity<UserLoginVO> login(@RequestBody @Validated UserLoginReq userLoginReq) throws Exception {
+        return ResponseEntity.ok(authService.login(userLoginReq));
     }
 
     /**
@@ -79,9 +114,11 @@ public class AuthController {
     @AnonymousAccess
     @APIMessage("用户注册")
     @PostMapping("register")
-    public ResponseEntity<Object> register(@RequestBody @Validated UserRegisterReq userRegisterReq) {
-        return new ResponseEntity<>(authService.register(userRegisterReq), HttpStatus.OK);
+    public ResponseEntity<UserRegisterVO> register(@RequestBody @Validated UserRegisterReq userRegisterReq) {
+        return ResponseEntity.ok(authService.register(userRegisterReq));
     }
+
+
 
 }
 

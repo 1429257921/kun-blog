@@ -1,7 +1,6 @@
 package com.kun.common.core.utils.spring;
 
 import com.kun.common.core.exception.Assert;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

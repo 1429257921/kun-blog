@@ -1,5 +1,6 @@
 package com.kun.blog.controller;
 
+import com.kun.blog.anno.AnonymousAccess;
 import com.kun.blog.service.ChatService;
 import com.kun.common.log.anno.APIMessage;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,5 +36,15 @@ public class ChatController {
     public ResponseEntity<Object> getChatList() {
         return new ResponseEntity<>(chatService.getChatList(), HttpStatus.OK);
     }
+
+    @AnonymousAccess
+    @APIMessage(value = "测试", printReqParam = false, reqLogInsertDB = false)
+    @GetMapping("test/{id}")
+    public ResponseEntity<Object> test(@PathVariable Integer id) {
+        return new ResponseEntity<>(chatService.test(id), HttpStatus.OK);
+    }
+
+
+
 
 }

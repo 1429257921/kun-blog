@@ -1,10 +1,18 @@
 package com.kun.common.redis.service;
 
+import cn.hutool.core.collection.CollUtil;
+import com.kun.common.core.exception.Assert;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.GeoResult;
+import org.springframework.data.geo.GeoResults;
+import org.springframework.data.geo.Point;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.domain.geo.GeoLocation;
+import org.springframework.data.redis.domain.geo.Metrics;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -16,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  * @since 2022/9/30 20:42
  */
 @RequiredArgsConstructor
-@SuppressWarnings(value = {"unchecked", "rawtypes"})
+@SuppressWarnings("all")
 public class RedisService {
 
     public final RedisTemplate redisTemplate;
@@ -222,4 +230,92 @@ public class RedisService {
     public Collection<String> keys(final String pattern) {
         return redisTemplate.keys(pattern);
     }
+
+    /**
+     * 添加经纬度信息
+     *
+     * @param key    Redis键
+     * @param x      经度
+     * @param y      纬度
+     * @param member 成员
+     * @return 添加的元素数量
+     */
+    public Long addGeo(final String key, final double x, final double y, final String member) {
+        return redisTemplate.opsForGeo().add(key, new Point(x, y), member);
+    }
+
+    /**
+     * 获取经纬度信息
+     *
+     * @param key    Redis键
+     * @param member 成员
+     * @return 经纬度对象
+     */
+    public Point getGeo(final String key, final String member) {
+        Map<String, Point> geoList = getGeoList(key, member);
+        return CollUtil.isNotEmpty(geoList) ? geoList.get(member) : null;
+    }
+
+    /**
+     * 获取多个经纬度信息
+     *
+     * @param key     Redis键
+     * @param members 成员数组
+     * @return 成员对应的经纬度信息集合
+     */
+    public Map<String, Point> getGeoList(final String key, final String... members) {
+        List<Point> list = redisTemplate.opsForGeo().position(key, members);
+        Map<String, Point> map = new HashMap<>(members.length);
+        if (CollUtil.isNotEmpty(list)) {
+            for (int i = 0; i < list.size(); i++) {
+                map.put(members[i], list.get(i));
+            }
+        }
+        return map;
+    }
+
+    /**
+     * 计算两个成员经纬度之间的直线距离
+     *
+     * @param key     Redis键
+     * @param member1 成员1
+     * @param member2 成员2
+     * @return 距离(单位米)
+     */
+    public Double distanceGeo(final String key, final String member1, final String member2) {
+        Distance distance = redisTemplate.opsForGeo().distance(key, member1, member2, Metrics.METERS);
+        return distance != null ? distance.getValue() : null;
+    }
+
+    /**
+     * 查询圆心范围内的所有成员
+     *
+     * @param key      Redis键
+     * @param member   成员
+     * @param distance 圆的半径距离(米)
+     * @return 所有包含在圆内的成员信息（直线距离由近到远）
+     */
+    public List<GeoResult<GeoLocation<String>>> radiusGeo(final String key, final String member, final long distance) {
+        GeoResults<GeoLocation<String>> results = redisTemplate.opsForGeo().radius(key, member, distance);
+        if (results != null) {
+            // 平均距离
+            Distance averageDistance = results.getAverageDistance();
+            List<GeoResult<GeoLocation<String>>> content = results.getContent();
+//            List<GeoResult<RedisGeoCommands.GeoLocation<String>>> resultsContent = results.getContent();
+            return content;
+//            if (CollUtil.isNotEmpty(resultsContent)) {
+//                for (GeoResult<RedisGeoCommands.GeoLocation<String>> geoLocationGeoResult : resultsContent) {
+//                    // 直线距离
+//                    Distance resultDistance = geoLocationGeoResult.getDistance();
+//                    RedisGeoCommands.GeoLocation<String> content = geoLocationGeoResult.getContent();
+//                    // 成员名称
+//                    String name = content.getName();
+//                    // 成员坐标
+//                    Point point = content.getPoint();
+//                }
+//            }
+        }
+        return new ArrayList<>();
+    }
+
 }

@@ -3,13 +3,15 @@ package com.kun.common.core.exception;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import com.kun.common.core.exception.BizException;
 
 /**
  * 自定义断言，可抛出自定义异常BizException
  *
  * @author gzc
- * @since 2022/9/30 20:29
+ * @since 2022/12/2 10:29
  */
+@SuppressWarnings("all")
 public class Assert {
 
     /**
@@ -34,7 +36,6 @@ public class Assert {
      * @param text             被检查字符串
      * @param errorMsgTemplate 错误消息模板，变量使用{}表示
      * @param params           参数
-     * @return 非空字符串
      */
     public static void isBlank(String text, String errorMsgTemplate, Object... params) {
         if (StrUtil.isNotBlank(text)) {
@@ -109,7 +110,6 @@ public class Assert {
         }
         return collection;
     }
-
 
     /**
      * 断言给定数组是否不包含 null元素，如果数组为空或 null将被认为不包含
@@ -188,15 +188,40 @@ public class Assert {
      * @param number           参数
      * @param errorMsgTemplate 错误信息模板
      * @param params           错误信息参数
-     * @return: void
-     * @author: gzc
-     * @date: 2021-12-16 8:51
+     * @return int
      */
     public static int moreThanZero(int number, String errorMsgTemplate, Object... params) {
         if (number <= 0) {
             throw new BizException(StrUtil.format(errorMsgTemplate, params));
         }
         return number;
+    }
+
+    /**
+     * 是否为false, 为true则抛出异常
+     *
+     * @param bol              参数
+     * @param errorMsgTemplate 错误信息模板
+     * @param params           错误信息参数
+     * @return boolean
+     */
+    public static Boolean isFalse(Boolean bol, String errorMsgTemplate, Object... params) {
+        if (bol) {
+            throw new BizException(StrUtil.format(errorMsgTemplate, params));
+        }
+        return true;
+    }
+
+    /**
+     * 是否为true, 为false则抛出异常
+     *
+     * @param bol              参数
+     * @param errorMsgTemplate 错误信息模板
+     * @param params           错误信息参数
+     * @return boolean
+     */
+    public static Boolean isTrue(Boolean bol, String errorMsgTemplate, Object... params) {
+        return isFalse(!bol, errorMsgTemplate, params);
     }
 
 }

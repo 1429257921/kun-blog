@@ -1,11 +1,9 @@
 package com.kun.blog.service.impl;
 
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
-import com.kun.blog.entity.po.KunUser;
+import com.kun.blog.entity.po.User;
+import com.kun.blog.enums.UserSexEnum;
 import com.kun.blog.security.dto.JwtUser;
-import com.kun.blog.service.IKunUserService;
-import com.kun.common.core.exception.Assert;
-import com.kun.common.core.exception.BizException;
+import com.kun.blog.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,38 +24,28 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final IKunUserService kunUserService;
+    private final IUserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        KunUser kunUser = new LambdaQueryChainWrapper<>(kunUserService.getBaseMapper())
-                .eq(KunUser::getUsername, username)
-                .one();
-        Assert.notNull(kunUser, "账号不存在");
-        if (kunUser.getStatus() == null || !kunUser.getStatus()) {
-            throw new BizException("账号异常或被封禁");
+        User user = userService.getByPhone(username);
+        JwtUser jwtUser = null;
+        if (user != null) {
+            jwtUser = new JwtUser(
+                    user.getId(),
+                    user.getPhone(),
+                    user.getNickName(),
+                    user.getSex(),
+                    UserSexEnum.getName(user.getSex()),
+                    null,
+                    user.getHeadPortrait(),
+                    user.getCreateTime(),
+                    user.getStatus(),
+                    null
+            );
         }
-        if (kunUser.getIsDel() == null || kunUser.getIsDel()) {
-            throw new BizException("账号已注销");
-        }
-        return createJwtUser(kunUser);
+        return jwtUser;
     }
 
 
-    private UserDetails createJwtUser(KunUser kunUser) {
-        return new JwtUser(
-                kunUser.getUid(),
-                kunUser.getUsername(),
-                kunUser.getNickname(),
-                kunUser.getSex(),
-                kunUser.getPassword(),
-                kunUser.getAvatar(),
-                "",
-                kunUser.getPhone(),
-                null,
-                true,
-                kunUser.getCreateTime(),
-                null
-        );
-    }
 }

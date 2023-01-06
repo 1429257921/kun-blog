@@ -11,4 +11,6 @@ import com.kun.common.database.service.BaseService;
  */
 public interface IChatMessagesService extends BaseService<ChatMessages>{
 
+   Object test(Integer id);
+
 }

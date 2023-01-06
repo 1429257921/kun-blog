@@ -71,7 +71,7 @@ public class ${entity} implements Serializable {
     <#if field.annotationColumnName == "del_flag" || field.annotationColumnName == "is_delete">
 	@TableField("${field.annotationColumnName}")
 	@TableLogic
-	private Byte delete = 0;
+	private Byte deleted = 0;
 		<#continue>
     </#if>
 	private ${field.propertyType} ${field.propertyName};

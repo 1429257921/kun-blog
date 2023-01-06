@@ -96,7 +96,7 @@ public class LogAspect {
             insertDB(apiMsg, logDTO, joinPoint);
             throw th;
         } finally {
-            log.info("结束执行{} 业务逻辑, 耗时->{}", apiMsg, DateUtil.betweenMs(beginTime, endTime));
+            log.info("结束执行{} 业务逻辑, 耗时->{}ms", apiMsg, DateUtil.betweenMs(beginTime, endTime));
         }
         return response;
     }

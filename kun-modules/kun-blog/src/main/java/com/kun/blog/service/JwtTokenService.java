@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.google.gson.Gson;
 import com.kun.blog.security.dto.JwtUser;
 import com.kun.blog.security.JwtProperties;
+import com.kun.common.core.exception.Assert;
 import com.kun.common.redis.service.RedisService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -35,7 +36,7 @@ public class JwtTokenService {
     /**
      * 用户信息缓存前缀
      */
-    private static final String REDIS_PREFIX_USER = "user-details:";
+    private static final String REDIS_PREFIX_USER = "USER:JWT_TOKEN:";
 
     private final JwtProperties jwtProperties;
     private final RedisService redisService;
@@ -115,7 +116,7 @@ public class JwtTokenService {
                 .setExpiration(generateExpired())
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
-
+        Assert.notBlank(token, "生成token失败");
         String key = REDIS_PREFIX_AUTH + userDetails.getUsername() + ":" + token;
         redisService.setCacheObject(key, token, jwtProperties.getTokenValidityInSeconds(), TimeUnit.MILLISECONDS);
         putUserDetails(userDetails);
@@ -182,7 +183,7 @@ public class JwtTokenService {
      */
     private void putUserDetails(UserDetails userDetails) {
         String key = REDIS_PREFIX_USER + userDetails.getUsername();
-        System.out.println(new Gson().toJson(userDetails));
+//        System.out.println(new Gson().toJson(userDetails));
         redisService.setCacheObject(key, new Gson().toJson(userDetails), jwtProperties.getTokenValidityInSeconds(), TimeUnit.MILLISECONDS);
     }
 

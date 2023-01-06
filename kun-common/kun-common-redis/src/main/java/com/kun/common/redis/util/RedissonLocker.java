@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * @since 2022/9/21 5:26
  **/
 @RequiredArgsConstructor
-public class RedissonLocker implements Locker {
+public class RedissonLocker implements Locker { 
 
     private final RedissonClient redissonClient;
 

@@ -17,4 +17,7 @@ public interface ChatService {
      * @return
      */
     List<ChatListVO> getChatList();
+
+    Object test(Integer id);
+
 }

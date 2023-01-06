@@ -8,4 +8,6 @@ package com.kun.common.redis.constants;
  **/
 public class CacheConstants {
     public static final String PC_LIMIT_PREFIX = "kun-blog";
+
+    public static final String SMS_AUTH_CODE = "SMS:AUTH_CODE:";
 }

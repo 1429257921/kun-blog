@@ -1,9 +1,9 @@
 package com.kun.blog.entity.req;
 
-import com.kun.common.database.anno.Query;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -14,32 +14,19 @@ import java.io.Serializable;
  **/
 @Data
 public class UserRegisterReq implements Serializable {
-    private static final long serialVersionUID = -1242493306307174690L;
     /**
-     * 用户名
+     * 手机号
      */
-    @Query(propName = "username")
-    @NotBlank(message = "用户名为空")
-    private String userName;
+    @NotBlank(message = "手机号为空")
+    private String phone;
     /**
-     * 密码
+     * 手机验证码
      */
-    @NotBlank(message = "密码为空")
-    private String passWord;
+    @NotNull(message = "手机验证码为空")
+    private Integer code;
     /**
-     * 电子邮箱
+     * 时间戳(秒)
      */
-    private String email;
-    /**
-     * 验证码
-     */
-    private String code;
-    /**
-     * 时间戳
-     */
-    private String timestamp;
-    /**
-     * 注册类型
-     */
-    private Integer registerType;
+    @NotNull(message = "时间戳为空")
+    private Long timestamp;
 }

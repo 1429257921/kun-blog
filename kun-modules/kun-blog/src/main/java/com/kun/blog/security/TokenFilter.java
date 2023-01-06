@@ -51,7 +51,7 @@ public class TokenFilter extends GenericFilterBean {
                 return;
             }
         } catch (ExpiredJwtException e) {
-            log.error("jwtToken过期,{}", e);
+            log.error("jwtToken过期", e);
         }
         log.info("token->{}", authToken);
         String userName = StrUtil.isNotBlank(authToken) ? jwtTokenService.getUsernameFromToken(authToken) : null;
@@ -64,6 +64,7 @@ public class TokenFilter extends GenericFilterBean {
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+            // 设置全局用户对象
             securityContext.setAuthentication(authentication);
             log.info("用户信息->{}", userDetails);
             log.debug("set Authentication to security context for '{}', uri: {}", authentication.getName(), requestRri);

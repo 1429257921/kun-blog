@@ -3,10 +3,10 @@ package com.kun.common.web.handler;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.CharUtil;
 import com.alibaba.fastjson.JSONException;
-import com.kun.common.web.util.WebContextUtil;
 import com.kun.common.core.enums.ErrorEnum;
 import com.kun.common.core.exception.BizException;
 import com.kun.common.core.utils.ThreadLocalUtil;
+import com.kun.common.web.util.WebContextUtil;
 import com.kun.common.web.vo.KunResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
                 WebContextUtil.getApiMsg(), url, e);
         log.info("{}发生业务异常, 接口路径{}, 异常原因简单描述为:{}\n",
                 WebContextUtil.getApiMsg(), url, e.getErrMsg());
-
+        log.error(String.format("%s:%s", Thread.currentThread().getStackTrace()[1].getMethodName(), e.getErrCode()));
         KunResult kunResult = KunResult.errDetail(e);
         return returnAfter(req, kunResult);
     }
@@ -70,6 +70,7 @@ public class GlobalExceptionHandler {
         KunResult kunResult = KunResult.errDetailMsg(ErrorEnum.REQUEST_METHOD_NOT_SUPPORT, e);
         return returnAfter(req, kunResult);
     }
+
     /**
      * 检验参数
      *

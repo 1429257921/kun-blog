@@ -12,9 +12,9 @@ spring:
     active: local
 
 # 打印执行的sql语句
-#logging:
-#  level:
-#    com.kun.blog.mapper: debug
+logging:
+  level:
+    com.kun.blog.mapper: debug
 
 # mybatis-plus相关配置
 mybatis-plus:

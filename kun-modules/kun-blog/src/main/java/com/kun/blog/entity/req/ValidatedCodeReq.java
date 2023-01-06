@@ -22,4 +22,5 @@ public class ValidatedCodeReq {
      */
     @NotBlank(message = "验证码为空")
     private String code;
+
 }

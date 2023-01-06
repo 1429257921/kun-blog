@@ -30,12 +30,12 @@ public class MybatisPlusConfig {
     /**
      * sql 日志
      */
-    @Bean
-    @Profile({"local", "dev", "test"})
-    @ConditionalOnProperty(value = "mybatis-plus.sql-log.enable", matchIfMissing = true)
-    public SqlLogInterceptor sqlLogInterceptor() {
-        return new SqlLogInterceptor();
-    }
+//    @Bean
+//    @Profile({"local", "dev", "test"})
+//    @ConditionalOnProperty(value = "mybatis-plus.sql-log.enable", matchIfMissing = true)
+//    public SqlLogInterceptor sqlLogInterceptor() {
+//        return new SqlLogInterceptor();
+//    }
 
     /**
      * 配置mybatis的分页插件pageHelper

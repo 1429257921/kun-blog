@@ -5,7 +5,6 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.util.StringUtils;
 
 /**
@@ -20,7 +19,10 @@ import org.springframework.util.StringUtils;
 public class KunBlogApplication {
 
     public static void main(String[] args) {
-        printConfigInfo(SpringApplication.run(KunBlogApplication.class, args));
+        SpringApplication springApplication = new SpringApplication(KunBlogApplication.class);
+        // 允许循环依赖
+        springApplication.setAllowCircularReferences(true);
+        printConfigInfo(springApplication.run(args));
     }
 
     /**

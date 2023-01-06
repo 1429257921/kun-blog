@@ -77,6 +77,12 @@
             <artifactId>gson</artifactId>
         </dependency>
 
+        <!--解决无法序列号LocalDateTime问题-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.13.1</version>
+        </dependency>
     </dependencies>
 
     <build>

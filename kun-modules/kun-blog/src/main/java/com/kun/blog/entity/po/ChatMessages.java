@@ -41,7 +41,7 @@ public class ChatMessages {
 	/**
 	 * 0已读 1未读
 	 */
-	private Integer read;
+	private Integer markRead;
 	/**
 	 * 发送者用户ID
 	 */
