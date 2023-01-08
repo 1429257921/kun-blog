@@ -7,6 +7,7 @@ import com.kun.common.redis.aop.Limit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,6 +36,7 @@ public class UserController {
     @Limit(period = 3, count = 1)
     @APIMessage("设置密码")
     @PostMapping("setupPassword")
+    @PreAuthorize("hasAnyAuthority('test:one:add')")
     public ResponseEntity<Object> setupPassword(@Validated @RequestBody SetupPassWordReq setupPassWordReq) {
         userService.setupPassword(setupPassWordReq);
         return ResponseEntity.ok().build();

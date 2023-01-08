@@ -9,11 +9,13 @@ import com.kun.blog.enums.UserSexEnum;
 import com.kun.blog.enums.UserStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * jwt用户详情
@@ -96,6 +98,20 @@ public class JwtUser implements UserDetails {
     @Override
     public String getUsername() {
         return this.phone;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+
+    /**
+     * 获取当前用户的角色集合
+     *
+     * @return 角色集合
+     */
+    public Collection getRoles() {
+        return authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
     }
 
     /**
