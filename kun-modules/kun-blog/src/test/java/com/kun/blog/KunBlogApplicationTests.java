@@ -9,6 +9,7 @@ public class KunBlogApplicationTests {
 
     @Test
     void contextLoads() {
+        System.out.println("sss");
     }
 
     public static void main(String[] args) {

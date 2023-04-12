@@ -15,7 +15,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @author gzc
  * @since 2022/9/30 20:41
  */
-//@EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
@@ -35,10 +34,11 @@ public class RedisConfig extends CachingConfigurerSupport {
         // 使用StringRedisSerializer来序列化和反序列化redis的key值
         template.setKeySerializer(new StringRedisSerializer());
 
-//		template.setHashKeySerializer(new StringRedisSerializer());
-//		template.setHashValueSerializer(serializer);
+		template.setHashKeySerializer(new StringRedisSerializer());
+		template.setHashValueSerializer(serializer);
 
         template.afterPropertiesSet();
         return template;
     }
 }
+

@@ -68,7 +68,7 @@ public class ${entity} implements Serializable {
 	    </#if>
     </#if>
     <#-- 逻辑删除注解 -->
-    <#if field.annotationColumnName == "del_flag" || field.annotationColumnName == "is_delete">
+    <#if field.annotationColumnName == "del_flag" || field.annotationColumnName == "is_deleted">
 	@TableField("${field.annotationColumnName}")
 	@TableLogic
 	private Byte deleted = 0;

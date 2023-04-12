@@ -1,9 +1,11 @@
 package com.kun.blog;
 
-import cn.hutool.core.date.DateTime;
-import cn.hutool.core.date.DateUtil;
-
-import java.util.Date;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 /**
  * TODO
@@ -13,10 +15,19 @@ import java.util.Date;
  **/
 public class Test1 {
     public static void main(String[] args) {
-        String time = "1669978847";
-//        DateTime parse = DateUtil.parseDate(time);
-        System.out.println(DateUtil.current());
-        System.out.println(DateUtil.currentSeconds());
-        System.out.println(new DateTime(time).toDateStr());
+        LocalDateTime now = LocalDateTime.now();
+        LocalDate localDate = now.toLocalDate();
+
+        LocalTime localTime = now.toLocalTime();
+        System.out.println(now);
+        System.out.println(localTime);
+        System.out.println(localDate);
+        LocalDateTime of = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+        System.out.println("of" + of);
+        String format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.of(LocalDate.now(), LocalTime.MIN));
+        System.out.println(format);
+        LocalDateTime parse = LocalDateTime.parse(format, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        System.out.println(parse);
+
     }
 }

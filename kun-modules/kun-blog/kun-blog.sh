@@ -2,13 +2,13 @@
 
 APP_NAME=kun-blog
 
-JAR_PATH='/root/kun-blog'
+JAR_PATH='/usr/local/src/project/kun-cloud'
 
 JAR_NAME=kun-blog.jar
 
 JAR_SIMPLE_NAME=kun-blog
 
-LOG_PATH='/root/kun-blog/logs'
+LOG_PATH='/usr/local/src/project/kun-cloud/logs'
 
 usage() {
     echo "Usage: sh kun-blog.sh [start|stop|restart|status]"
@@ -36,7 +36,7 @@ start(){
   	if [ ! -d $LOG_PATH ];then
   		mkdir -p $LOG_PATH
   	fi
-nohup java -Xms256m -Xmx512m -jar $JAR_PATH/$JAR_NAME --spring.profiles.active=prod > $LOG_PATH/$APP_NAME.log 2>&1 &
+nohup java -Xms256m -Xmx512m -jar $JAR_PATH/$JAR_NAME --spring.profiles.active=prod  -Djava.awt.headless=false -DKUN_BLOG_SERVER_IP=112.74.169.107 -DKUN_BLOG_REDIS_PASSWORD=admin123 -DKUN_BLOG_DATASOURCE_USERNAME=root -DKUN_BLOG_DATASOURCE_PASSWORD=qazWSX123 -DKUN_BLOG_FASTDFS_GROUP=group1 -DKUN_BLOG_FASTDFS_PORT=22122 -Xms128m -Xmx128m -Xss256k -XX:ParallelGCThreads=2> $LOG_PATH/$APP_NAME.log 2>&1 &
     echo ">>> start $APP_NAME successed PID=$! <<<"
 	printLog
    fi
@@ -73,7 +73,7 @@ restart(){
 
 printLog()
 {
-tail -f  /root/kun-blog/logs/kun-blog.log
+tail -f  /usr/local/src/project/kun-cloud/logs/kun-blog.log
 }
 
 case "$1" in
