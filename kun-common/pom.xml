@@ -22,6 +22,7 @@
         <module>kun-common-redis</module>
         <module>kun-common-rabbitmq</module>
         <module>kun-common-database</module>
+        <module>kun-common-mongo</module>
     </modules>
 
     <dependencies>
