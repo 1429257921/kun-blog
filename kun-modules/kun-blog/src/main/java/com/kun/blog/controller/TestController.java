@@ -5,7 +5,6 @@ import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.thread.ConcurrencyTester;
 import cn.hutool.core.thread.ThreadUtil;
-import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestAlgorithm;
@@ -20,6 +19,8 @@ import com.kun.blog.anno.AnonymousAccess;
 import com.kun.blog.entity.po.ChatMessagesType;
 import com.kun.blog.enums.RedisKeyConstant;
 import com.kun.blog.enums.RunCircleHomeCalculateEnum;
+import com.kun.blog.mongo.dao.SysLogMongoDaoImpl;
+import com.kun.blog.mongo.po.SysLog;
 import com.kun.blog.service.IChatMessagesTypeService;
 import com.kun.common.core.exception.BizException;
 import com.kun.common.log.anno.APIMessage;
@@ -60,6 +61,19 @@ public class TestController {
     private final IChatMessagesTypeService iChatMessagesTypeService;
     private final RedisService redisService;
     private final RedisTemplate<String, String> redisTemplate;
+    private final SysLogMongoDaoImpl sysLogMongoDao;
+
+    @AnonymousAccess
+    @APIMessage(value = "测试mongodb", printReqParam = false, reqLogInsertDB = false)
+    @PostMapping("testMongodb")
+    public void testMongodb() {
+        SysLog sysLog = new SysLog();
+        SysLog save = sysLogMongoDao.save(sysLog);
+        System.out.println("插入成功！" + JSON.toJSONString(save));
+        SysLog byId = sysLogMongoDao.findById(String.valueOf(sysLog.getId()));
+        System.out.println("查询插入记录->" + JSON.toJSONString(byId));
+    }
+
 
     @AnonymousAccess
     @APIMessage(value = "视频检测回调", printReqParam = true, reqLogInsertDB = false)

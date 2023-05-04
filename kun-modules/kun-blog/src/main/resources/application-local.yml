@@ -10,12 +10,21 @@ spring:
   redis:
     host: www.kun.com
     port: 6379
-    password: ${KUN_BLOG_REDIS_PASSWORD}
+    password: ${KUN_BLOG_REDIS_PWD}
+  data:
+    mongodb:
+      #      uri: mongodb://www.kun.com:27017/kun-cloud
+      username: admin
+      password: ${KUN_BLOG_MONGO_PASSWORD}
+      host: www.kun.com
+      port: 27017
+      database: kun-cloud
+      auto-index-creation: true
   # 数据源配置
   datasource:
     druid:
       url: jdbc:mysql://www.kun.com:13306/kun-cloud?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
-      username: ${KUN_BLOG_DATASOURCE_USERNAME}
+      username: root
       password: ${KUN_BLOG_DATASOURCE_PASSWORD}
       driver-class-name: com.mysql.cj.jdbc.Driver
       type: com.alibaba.druid.pool.DruidDataSource
@@ -54,7 +63,7 @@ sms-config:
 
 # fastdfs连接配置
 fdfs:
-  groupName: ${KUN_BLOG_FASTDFS_GROUP}
+  groupName: group1
   soTimeout: 3000
   connectTimeout: 600
   # 缩略图生成参数
@@ -63,7 +72,7 @@ fdfs:
     height: 110
   # TrackerList参数,支持多个
   trackerList:
-    - www.kun.com:${KUN_BLOG_FASTDFS_PORT}
+    - www.kun.com:22122
   fileServerUrl: http://www.kun.com:8888/
 
 # okhttp相关配置

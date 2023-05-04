@@ -8,13 +8,22 @@ spring:
       name: root
       password: root
   redis:
-    host: 139.9.191.30
+    host: www.kun.com
     port: 6379
     password: admin123
+  data:
+    mongodb:
+#      uri: mongodb://www.kun.com:27017/kun-cloud
+      username: admin
+      password: ${KUN_BLOG_MONGO_PASSWORD}
+      host: www.kun.com
+      port: 27017
+      database: kun-cloud
+      auto-index-creation: true
   # 数据源配置
   datasource:
     druid:
-      url: jdbc:mysql://139.9.191.30:13306/kun-cloud?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://www.kun.com:13306/kun-cloud?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
       username: root
       password: qazWSX123
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -63,8 +72,8 @@ fdfs:
     height: 110
   # TrackerList参数,支持多个
   trackerList:
-    - 139.9.191.30:22122
-  fileServerUrl: http://139.9.191.30:8888/
+    - www.kun.com:22122
+  fileServerUrl: http://www.kun.com:8888/
 
 # okhttp相关配置
 ok:

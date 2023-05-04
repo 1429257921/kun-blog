@@ -1,13 +1,18 @@
 package com.kun.common.mongo.service;
 
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.kun.common.core.utils.IdWorker;
 import com.kun.common.mongo.anno.QueryField;
 import com.kun.common.mongo.vo.Page;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
-import javax.annotation.Resource;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -20,13 +25,20 @@ import java.util.List;
  **/
 public abstract class AbstractMongoDaoSupport<T> implements BaseMongoDao<T> {
 
-    @Resource
+    @Autowired
+    @Qualifier("mongoTemplate")
     protected MongoTemplate mongoTemplate;
 
+    @SuppressWarnings("all")
     @Override
     public T save(T bean) {
-        mongoTemplate.save(bean);
-        return bean;
+        JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(bean));
+        String id = jsonObject.getString("id");
+        if (StrUtil.isBlank(id)) {
+            jsonObject.put("id", IdWorker.getId());
+            bean = (T) JSON.parseObject(jsonObject.toJSONString(), bean.getClass());
+        }
+        return mongoTemplate.save(bean);
     }
 
     @Override
