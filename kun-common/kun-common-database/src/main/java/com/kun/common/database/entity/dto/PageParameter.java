@@ -3,7 +3,7 @@ package com.kun.common.database.entity.dto;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.kun.common.database.util.QueryHelpPlus;
+import com.kun.common.database.util.MpQueryUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -52,7 +52,7 @@ public class PageParameter<T> extends Page<T> {
     }
 
     public <R> QueryWrapper<R> buildQueryWrapper(Class<R> cls) {
-        return QueryHelpPlus.getPredicate(this, cls);
+        return MpQueryUtil.getPredicate(this.selectParameter, cls);
     }
 
     @SuppressWarnings("ALL")

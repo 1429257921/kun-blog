@@ -1,5 +1,7 @@
 package com.kun.common.database.anno;
 
+import cn.hutool.core.text.StrPool;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -25,9 +27,13 @@ public @interface Query {
 
     /**
      * 多字段模糊搜索，仅支持String类型字段，多个用逗号隔开, 如@Query(blurry = "email,username")
+     * {@link StrPool#COMMA}
      */
     String blurry() default "";
 
+    /**
+     * sql查询条件类型
+     */
     enum Type {
         // 相等
         EQUAL
@@ -51,8 +57,8 @@ public @interface Query {
         , BETWEEN
         // 不为空
         , NOT_NULL
-        // 查询时间
-        , UNIX_TIMESTAMP
+        // 查询时间戳
+        , UNIX_TIME_STAMP
     }
 
 }

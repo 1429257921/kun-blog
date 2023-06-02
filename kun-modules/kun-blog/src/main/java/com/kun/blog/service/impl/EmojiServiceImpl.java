@@ -6,7 +6,7 @@ import com.kun.blog.entity.req.EmojiSearchReq;
 import com.kun.blog.mapper.EmojiMapper;
 import com.kun.blog.service.IEmojiService;
 import com.kun.common.database.service.impl.BaseServiceImpl;
-import com.kun.common.database.util.QueryHelpPlus;
+import com.kun.common.database.util.MpQueryUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +27,7 @@ public class EmojiServiceImpl extends BaseServiceImpl<EmojiMapper, Emoji> implem
     @Override
     public PageInfo<Emoji> search(EmojiSearchReq emojiSearchReq, Pageable pageable) {
         getPage(pageable);
-        return new PageInfo<>(baseMapper.selectList(QueryHelpPlus.getPredicate(emojiSearchReq, Emoji.class)));
+        return new PageInfo<>(baseMapper.selectList(MpQueryUtil.getPredicate(emojiSearchReq, Emoji.class)));
     }
 
 }

@@ -18,4 +18,9 @@ public class UserLoginRecordPageListReq implements Serializable {
      */
     @Query(type = Query.Type.EQUAL)
     private Integer loginStatus;
+
+    /**
+     * 客户端版本号
+     */
+    private String appVersion;
 }
