@@ -144,8 +144,8 @@ public class AuthServiceImpl implements AuthService {
         // 初始化上下文
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(userLoginReq.getPhone(), userLoginReq.getPassword());
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         // 查询用户信息
         JwtUser jwtUser = (JwtUser) Assert.notNull(userDetailsService.loadUserByUsername(userLoginReq.getPhone()), "用户不存在");
 

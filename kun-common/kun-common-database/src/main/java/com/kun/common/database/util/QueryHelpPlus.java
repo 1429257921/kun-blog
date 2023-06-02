@@ -8,6 +8,7 @@ import com.kun.common.database.anno.Query;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,14 +22,17 @@ import java.util.List;
  * @since 2022/10/6 14:27
  */
 @Slf4j
-@SuppressWarnings("all")
 public class QueryHelpPlus {
 
     /**
      * 获取查询包装器
+     *
+     * @param query
+     * @param <Q>
+     * @return
      */
-    public static <R, Q> QueryWrapper getPredicate(R obj, Q query) {
-        QueryWrapper<R> queryWrapper = new QueryWrapper<R>();
+    public static <Q, R> QueryWrapper<R> getPredicate(Q query, Class<R> cls) {
+        QueryWrapper<R> queryWrapper = new QueryWrapper<>();
         if (query == null) {
             return queryWrapper;
         }
@@ -64,56 +68,8 @@ public class QueryHelpPlus {
                         continue;
                     }
                     String finalAttributeName = attributeName;
-                    switch (q.type()) {
-                        case EQUAL:
-                            //queryWrapper.and(wrapper -> wrapper.eq(finalAttributeName, val));
-                            queryWrapper.eq(attributeName, val);
-                            break;
-                        case GREATER_THAN:
-                            queryWrapper.ge(finalAttributeName, val);
-                            break;
-                        case LESS_THAN:
-                            queryWrapper.le(finalAttributeName, val);
-                            break;
-                        case LESS_THAN_NQ:
-                            queryWrapper.lt(finalAttributeName, val);
-                            break;
-                        case INNER_LIKE:
-                            queryWrapper.like(finalAttributeName, val);
-                            break;
-                        case LEFT_LIKE:
-                            queryWrapper.likeLeft(finalAttributeName, val);
-                            break;
-                        case RIGHT_LIKE:
-                            queryWrapper.likeRight(finalAttributeName, val);
-                            break;
-                        case IN:
-                            if (CollUtil.isNotEmpty((Collection<Long>) val)) {
-                                queryWrapper.in(finalAttributeName, (Collection<Long>) val);
-                            }
-                            break;
-                        case NOT_EQUAL:
-                            queryWrapper.ne(finalAttributeName, val);
-                            break;
-                        case NOT_NULL:
-                            queryWrapper.isNotNull(finalAttributeName);
-                            break;
-                        case BETWEEN:
-                            List<Object> between = new ArrayList<>((List<Object>) val);
-                            queryWrapper.between(finalAttributeName, between.get(0), between.get(1));
-                            break;
-                        case UNIX_TIMESTAMP:
-                            List<Object> UNIX_TIMESTAMP = new ArrayList<>((List<Object>) val);
-                            if (!UNIX_TIMESTAMP.isEmpty()) {
-                                SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                long time1 = fm.parse(UNIX_TIMESTAMP.get(0).toString()).getTime() / 1000;
-                                long time2 = fm.parse(UNIX_TIMESTAMP.get(1).toString()).getTime() / 1000;
-                                queryWrapper.between(finalAttributeName, time1, time2);
-                            }
-                            break;
-                        default:
-                            break;
-                    }
+                    // 构建查询包装器
+                    doBuildQueryWrapper(queryWrapper, q, val, finalAttributeName);
                 }
                 field.setAccessible(accessible);
             }
@@ -121,6 +77,69 @@ public class QueryHelpPlus {
             log.error(e.getMessage(), e);
         }
         return queryWrapper;
+    }
+
+    /**
+     * 构建查询包装器
+     *
+     * @param queryWrapper       查询包装器对象
+     * @param q                  查询条件注解
+     * @param val                属性值
+     * @param finalAttributeName 数据库字段名称
+     * @param <Q>
+     * @throws ParseException
+     */
+    private static <Q> void doBuildQueryWrapper(QueryWrapper<Q> queryWrapper, Query q, Object val, String finalAttributeName) throws ParseException {
+        switch (q.type()) {
+            case EQUAL:
+                //queryWrapper.and(wrapper -> wrapper.eq(finalAttributeName, val));
+                queryWrapper.eq(finalAttributeName, val);
+                break;
+            case GREATER_THAN:
+                queryWrapper.ge(finalAttributeName, val);
+                break;
+            case LESS_THAN:
+                queryWrapper.le(finalAttributeName, val);
+                break;
+            case LESS_THAN_NQ:
+                queryWrapper.lt(finalAttributeName, val);
+                break;
+            case INNER_LIKE:
+                queryWrapper.like(finalAttributeName, val);
+                break;
+            case LEFT_LIKE:
+                queryWrapper.likeLeft(finalAttributeName, val);
+                break;
+            case RIGHT_LIKE:
+                queryWrapper.likeRight(finalAttributeName, val);
+                break;
+            case IN:
+                if (CollUtil.isNotEmpty((Collection<Long>) val)) {
+                    queryWrapper.in(finalAttributeName, (Collection<Long>) val);
+                }
+                break;
+            case NOT_EQUAL:
+                queryWrapper.ne(finalAttributeName, val);
+                break;
+            case NOT_NULL:
+                queryWrapper.isNotNull(finalAttributeName);
+                break;
+            case BETWEEN:
+                List<Object> between = new ArrayList<>((List<Object>) val);
+                queryWrapper.between(finalAttributeName, between.get(0), between.get(1));
+                break;
+            case UNIX_TIMESTAMP:
+                List<Object> UNIX_TIMESTAMP = new ArrayList<>((List<Object>) val);
+                if (!UNIX_TIMESTAMP.isEmpty()) {
+                    SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    long time1 = fm.parse(UNIX_TIMESTAMP.get(0).toString()).getTime() / 1000;
+                    long time2 = fm.parse(UNIX_TIMESTAMP.get(1).toString()).getTime() / 1000;
+                    queryWrapper.between(finalAttributeName, time1, time2);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
 //    private static boolean isBlank(final CharSequence cs) {

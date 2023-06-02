@@ -62,5 +62,5 @@ public class GetUserDetailsVO {
     /**
      * 详细地址
      */
-    private String addres;
+    private String address;
 }

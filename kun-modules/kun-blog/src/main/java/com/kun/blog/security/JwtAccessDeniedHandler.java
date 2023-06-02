@@ -23,6 +23,7 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
                        HttpServletResponse response,
                        AccessDeniedException accessDeniedException) throws IOException {
         // 当用户在没有授权的情况下访问受保护的REST资源时，将调用此方法发送403 Forbidden响应
+        log.info("权限不足");
         response.sendError(HttpServletResponse.SC_FORBIDDEN, accessDeniedException.getMessage());
     }
 }

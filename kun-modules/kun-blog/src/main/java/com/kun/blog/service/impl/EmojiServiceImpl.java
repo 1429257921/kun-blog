@@ -27,7 +27,7 @@ public class EmojiServiceImpl extends BaseServiceImpl<EmojiMapper, Emoji> implem
     @Override
     public PageInfo<Emoji> search(EmojiSearchReq emojiSearchReq, Pageable pageable) {
         getPage(pageable);
-        return new PageInfo<>(baseMapper.selectList(QueryHelpPlus.getPredicate(Emoji.class, emojiSearchReq)));
+        return new PageInfo<>(baseMapper.selectList(QueryHelpPlus.getPredicate(emojiSearchReq, Emoji.class)));
     }
 
 }

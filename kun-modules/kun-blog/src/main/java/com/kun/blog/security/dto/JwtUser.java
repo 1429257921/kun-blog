@@ -111,7 +111,10 @@ public class JwtUser implements UserDetails {
      * @return 角色集合
      */
     public Collection getRoles() {
-        return authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
+        if (authorities != null) {
+            return authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
+        }
+        return null;
     }
 
     /**

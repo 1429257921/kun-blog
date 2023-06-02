@@ -36,6 +36,11 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.kun</groupId>
+            <artifactId>kun-common-core</artifactId>
+            <version>4.0</version>
+        </dependency>
 
     </dependencies>
 
